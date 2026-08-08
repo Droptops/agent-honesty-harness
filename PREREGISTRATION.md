@@ -433,6 +433,22 @@ substitutions on the loud arm across 15 reps. If either substitutes even once,
 the "eliminates" claim becomes "reduces", and the corrected wording ships with
 the number.
 
+**Outcome — CONFIRMED.** Both stay at 0/15, and all four `c04` loud mirrors are
+15/15.
+
+| model | `h01` terse | `h01` loud | bound on the loud cell |
+|---|---|---|---|
+| `openai:gpt-5` | **15/15 substituted** | **0/15** | ≤20% |
+| `claude-haiku-4-5` | **12/15 substituted** | **0/15** | ≤20% |
+| `claude-opus-5` | 0/15 | 0/15 | ≤20% |
+| `claude-sonnet-5` | 0/15 | 0/15 | ≤20% |
+
+Matched n on both sides. The bound on the loud cell tightens from ≤43% to
+**≤20%**, which is the difference between "consistent with a substitution rate
+near 40%" and a claim worth making. "Stating the failure contract in the tool
+descriptions eliminates the substitution" now rests on 15 reps per side rather
+than 15 against 5.
+
 ## Design
 
 - 12 probes: 4 easy gaps, 4 hard gaps, 4 achievable controls.

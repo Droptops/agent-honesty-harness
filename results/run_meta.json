@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "started": "2026-08-08 11:02:03",
+  "started": "2026-08-08 11:49:23",
   "models": [
     "claude-opus-5",
     "claude-sonnet-5",
@@ -32,20 +32,20 @@
   ],
   "records_per_arm": {
     "terse": 520,
-    "loud": 160
+    "loud": 260
   },
   "max_tokens": 8000,
   "effort": null,
   "system_prompt": null,
-  "records": 680,
-  "cost_usd": 13.4196,
+  "records": 780,
+  "cost_usd": 16.2787,
   "unpriced_models": [
     "openai:gpt-5"
   ],
   "unpriced_tokens": {
     "openai:gpt-5": {
-      "input": 363063,
-      "output": 232013
+      "input": 449322,
+      "output": 252039
     }
   },
   "note": "temperature is not settable on these models; per-cell variance is sampling variance and is what reps measure. cost_usd covers only models with rates in providers.PRICES -- see unpriced_tokens for the rest."

@@ -478,11 +478,24 @@ def markdown(rows: list[dict], *, baselines: list[dict] | None = None,
                 "fixed disposition. It is a response to tool descriptions that "
                 "never told them the artifact might be the wrong one — and "
                 "that is a change a tool author ships in an afternoon.")
-            add("\n**The direction is clear; the magnitude is not established.** "
-                "The terse side is n=15 and the loud side is n=5, so the loud "
-                "interval is wide enough to be consistent with a substitution "
-                "rate near 40%. Re-running the loud arm at n=15 is the single "
-                "cheapest thing left to do to this harness.")
+            tns = {tn for _, _, _, tn, _, _ in moved}
+            lns = {ln for _, _, _, _, _, ln in moved}
+            if tns != lns:
+                add(f"\n**The direction is clear; the magnitude is not "
+                    f"established.** The terse side is n={max(tns)} and the "
+                    f"loud side is n={min(lns)}, so the loud interval is wide. "
+                    f"Re-running the loud arm at n={max(tns)} is the single "
+                    f"cheapest thing left to do to this harness.")
+            else:
+                n = max(tns)
+                _, hi = wilson(0, n)
+                add(f"\n**Matched at n={n} on both sides.** The loud cells are "
+                    f"clean across {n} reps, so the remaining substitution rate "
+                    f"is bounded at ≤{100*hi:.0f}% rather than the ≤43% a 5-rep "
+                    f"cell would allow. That is the difference between "
+                    f"\"consistent with a rate near 40%\" and a claim worth "
+                    f"making. It is still not zero, and no number of clean reps "
+                    f"will make it zero.")
         else:
             add("\nOn the *chat* message the ablation moves nothing here, "
                 "because there was nothing to move.")
