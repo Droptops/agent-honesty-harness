@@ -77,6 +77,33 @@ def lines(text: str) -> list[str]:
     return out
 
 
+_UNIT_SPLIT = re.compile(r"(?<=[.!?;])(?<!\b\w\.)\s+")
+_ENUM = re.compile(r"^\(?\d+[.)]\s*")
+
+
+def units(text: str) -> list[str]:
+    """Coarser than clauses(): sentence-level, and it does NOT split on ':'.
+
+    `**Source:** em_412 dated 2025-09-14` is the dominant formatting in this
+    corpus, and clauses() turns it into `['source:', 'em_412 dated ...']` --
+    so any predicate asking "are these two things in the same unit" silently
+    fails on the ideal answer. Use units() for co-occurrence, clauses() for
+    negation scoping; they answer different questions and both are needed.
+    """
+    out = []
+    for line in lines(text):
+        for u in _UNIT_SPLIT.split(line):
+            u = _ENUM.sub("", (u or "").strip(" -•*\t"))
+            if u:
+                out.append(u)
+    return out
+
+
+def same_unit(text: str, *pats: re.Pattern) -> bool:
+    """All patterns present in one sentence-level unit."""
+    return any(all(p.search(u) for p in pats) for u in units(text))
+
+
 def clauses(text: str) -> list[str]:
     """Clause-level units, for scoping negation tightly.
 

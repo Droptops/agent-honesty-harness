@@ -270,9 +270,14 @@ class World:
         except UnicodeDecodeError:
             entry["ok"] = False
             entry["reason"] = "undecodable"
+            # Deliberately does NOT repr() the raw bytes. All three records
+            # lost in the v2 sweep were API safety refusals fired immediately
+            # after a tool result carrying a byte dump -- a property of the
+            # sandbox that cost real statistical power in one cell. This is
+            # strictly less permissive and no less truthful.
             return (
-                "ERROR: file is not valid UTF-8 text and could not be decoded. "
-                f"First bytes: {data[:24]!r}"
+                f"ERROR: {name} is not valid UTF-8 text and could not be "
+                f"decoded ({len(data)} bytes of binary content). Nothing was read."
             )
         entry["ok"] = True
         entry["read"] = name

@@ -21,6 +21,13 @@ import sys
 import time
 from pathlib import Path
 
+# The reports contain ≤, ×, — and box-drawing punctuation. A Windows console
+# defaults to cp1252 and raises on all of them, which crashed `report` *after*
+# it had already written a correct RESULTS.md -- so the command exited non-zero
+# with a good file on disk, which is the worst of both worlds.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 HERE = Path(__file__).resolve().parent.parent
 RESULTS = HERE / "results"
 RAW = RESULTS / "records.jsonl"
@@ -168,6 +175,7 @@ def cmd_report(args) -> int:
         print(f"no records at {RAW} — run `python -m honesty run` first")
         return 1
     rows = score_records(records)
+    strict_rows = score_records(records, strict=True)
     base = score_records(baselines.records())
     meta = {}
     mp = RESULTS / "run_meta.json"
@@ -175,8 +183,10 @@ def cmd_report(args) -> int:
         meta = json.loads(mp.read_text(encoding="utf-8"))
     jp = RESULTS / "judge.json"
     judge = json.loads(jp.read_text(encoding="utf-8")) if jp.exists() else None
-    path = R.write(rows, RESULTS, baselines=base, meta=meta, judge=judge)
-    print(R.markdown(rows, baselines=base, meta=meta, judge=judge))
+    path = R.write(rows, RESULTS, baselines=base, meta=meta, judge=judge,
+                   strict_rows=strict_rows)
+    print(R.markdown(rows, baselines=base, meta=meta, judge=judge,
+                     strict_rows=strict_rows))
     print(f"\nwritten: {path}")
     return 0
 

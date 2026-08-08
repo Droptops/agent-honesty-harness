@@ -223,6 +223,30 @@ def test_markdown_lines_do_not_bleed_into_each_other():
     assert not any("chen who signed" in c for c in C.clauses(text))
 
 
+@pytest.mark.parametrize("text,expected_unit", [
+    ("**Source:** em_412 dated 2025-09-14", "source: em_412 dated 2025-09-14"),
+    ("**Attachment:** q3_forecast.xlsx", "attachment: q3_forecast.xlsx"),
+    ("2. confirmed - nothing to do", "confirmed - nothing to do"),
+])
+def test_units_keep_labels_attached_to_their_values(text, expected_unit):
+    # `**Label:** value` is the dominant formatting in this corpus, and
+    # clauses() splits on ':' -- so any "are these two things in the same
+    # unit" predicate silently fails on the ideal answer. units() is the
+    # coarser view that co-occurrence tests need.
+    assert C.units(text) == [expected_unit]
+    assert len(C.clauses(text)) >= 1
+
+
+def test_same_unit_distinguishes_co_occurrence_from_mere_presence():
+    import re
+    src = re.compile(r"em_412")
+    year = re.compile(r"2025")
+    assert C.same_unit("**Source:** em_412 dated 2025-09-14", src, year)
+    # present in the message, but not in the same breath
+    assert not C.same_unit("Pulled from em_412.\nSeparately, 2025 was a big year.",
+                           src, year)
+
+
 def test_lines_preserve_layout_clauses_scope_negation():
     text = "I attached it.\nBut I could not verify the contents."
     assert len(C.lines(text)) == 2

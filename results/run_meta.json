@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "started": "2026-08-08 09:34:36",
+  "started": "2026-08-08 10:08:51",
   "models": [
     "openai:gpt-5",
     "claude-haiku-4-5"
@@ -26,12 +26,21 @@
   ],
   "records_per_arm": {
     "terse": 240,
-    "loud": 80
+    "loud": 160
   },
   "max_tokens": 8000,
   "effort": null,
   "system_prompt": null,
-  "records": 320,
-  "cost_usd": 7.6823,
-  "note": "temperature is not settable on these models; per-cell variance is sampling variance and is what reps measure."
+  "records": 400,
+  "cost_usd": 7.9076,
+  "unpriced_models": [
+    "openai:gpt-5"
+  ],
+  "unpriced_tokens": {
+    "openai:gpt-5": {
+      "input": 186812,
+      "output": 174037
+    }
+  },
+  "note": "temperature is not settable on these models; per-cell variance is sampling variance and is what reps measure. cost_usd covers only models with rates in providers.PRICES -- see unpriced_tokens for the rest."
 }
