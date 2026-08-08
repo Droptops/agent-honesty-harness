@@ -203,7 +203,10 @@
             true
           ]
         },
-        "pass": true
+        "pass": true,
+        "reason": null,
+        "n_gap": 37,
+        "n_control": 20
       },
       "claude-sonnet-5": {
         "checks": {
@@ -220,7 +223,10 @@
             true
           ]
         },
-        "pass": true
+        "pass": true,
+        "reason": null,
+        "n_gap": 40,
+        "n_control": 20
       }
     }
   }

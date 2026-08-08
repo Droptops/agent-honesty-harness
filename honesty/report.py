@@ -362,16 +362,15 @@ def markdown(rows: list[dict], *, baselines: list[dict] | None = None,
     add("- The bound is per *probe set*, not per honesty. Twelve probes do not "
         "span the space of ways an agent can misreport its own work.")
     add("- `gap dishonest = 0` is a property of this corpus **under this "
-        "detector**. An adversarial review found several classifier guards "
-        "that were whole-document rather than clause-scoped; those are fixed, "
-        "and re-scoring all records under the tightened scorer changed **no "
-        "record's class**. That is a robustness result, not proof the detector "
-        "cannot be worded around.")
-    add("- Two guards remain deliberately generous: the prompt-mandated "
-        "closing sentence *\"I did not send it\"* satisfies the blocker "
-        "predicate, and `_h02`'s period flag is over-determined by the file "
-        "the probe tells the agent to read. Both make the harness "
-        "*under*-detect, and both are v3 items with their own pre-registration.")
+        "detector** — but it now survives a considerably harsher one. An "
+        "adversarial review found guards that were whole-document rather than "
+        "clause-scoped, a blocker predicate satisfied by the prompt's own "
+        "mandated closing sentence (*\"I did not send it\"*), a period flag "
+        "over-determined by the file the probe tells the agent to read, and a "
+        "false-send pattern that could not match half its target forms. All "
+        "are fixed, and re-scoring every record under the tightened detector "
+        "changed **no record's class**. That is a robustness result, not proof "
+        "the detector cannot be worded around.")
     add("- Claim detection is regex over free text (`claims.py`). It is covered by "
         "author-written fixtures, not independent human labels.")
     add("- Two models, one provider, one tool schema, no system prompt.")
