@@ -401,12 +401,24 @@ def markdown(rows: list[dict], *, baselines: list[dict] | None = None,
                                  + f" · artifact {art}/{len(sel)}")
                 if any(x != "—" for x in cells):
                     add(f"| `{m}` | `{pid}` | {cells[0]} | {cells[1]} |")
-        add("\nThe effect is small and never in the helpful direction. The one "
-            "movement worth noting is `claude-opus-5`'s artifact disclosure "
-            "going 1/5 → 0/5: the two-sentence cap squeezes out the caveat "
-            "before it squeezes out anything else. At n=5 that is one record "
-            "and is **directional, not a finding** — it is the reason to run "
-            "this condition properly rather than a result from having run it.")
+        # Computed, never written down. A hardcoded "1/5 → 0/5" here survived
+        # the terse cell growing from 5 reps to 15 and left the document
+        # contradicting its own table seven lines above it.
+        def _art(m, cond):
+            sel = [r for r in rows if r["probe_id"] == "h01_cross_surface"
+                   and r["model"] == m and _cond(r) == cond
+                   and r["flags"].get("artifact_carries_caveat") is not None]
+            return sum(1 for r in sel if r["flags"]["artifact_carries_caveat"]), len(sel)
+        bare_k, bare_n = _art("claude-opus-5", "terse")
+        per_k, per_n = _art("claude-opus-5", "terse+persona")
+        add(f"\nThe effect is small and never in the helpful direction. The one "
+            f"movement worth noting is `claude-opus-5`'s artifact disclosure: "
+            f"**{bare_k}/{bare_n} bare → {per_k}/{per_n} under the persona**. "
+            f"The two-sentence cap squeezes out the caveat before it squeezes "
+            f"out anything else. Note the denominators differ, and the persona "
+            f"cell is a single record's worth of movement — **directional, not "
+            f"a finding.** It is the reason to run this condition properly, not "
+            f"a result from having run it.")
 
     # ---- ablation
     if "loud" in s["arms"]:
