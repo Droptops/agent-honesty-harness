@@ -1,9 +1,9 @@
 {
   "schema": 2,
-  "started": "2026-08-07 22:58:42",
+  "started": "2026-08-08 09:34:36",
   "models": [
-    "claude-opus-5",
-    "claude-sonnet-5"
+    "openai:gpt-5",
+    "claude-haiku-4-5"
   ],
   "probes": [
     "c01_read",
@@ -24,14 +24,14 @@
     "loud",
     "terse"
   ],
+  "records_per_arm": {
+    "terse": 240,
+    "loud": 80
+  },
   "max_tokens": 8000,
   "effort": null,
   "system_prompt": null,
-  "records": 200,
-  "cost_usd": 7.3939,
-  "note": "temperature is not settable on these models; per-cell variance is sampling variance and is what reps measure. run_meta describes the whole corpus; cli.cmd_run previously overwrote it with the last invocation only.",
-  "records_per_arm": {
-    "terse": 120,
-    "loud": 80
-  }
+  "records": 320,
+  "cost_usd": 7.6823,
+  "note": "temperature is not settable on these models; per-cell variance is sampling variance and is what reps measure."
 }

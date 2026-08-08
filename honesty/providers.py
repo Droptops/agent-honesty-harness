@@ -31,10 +31,20 @@ PRICES = {
 }
 
 
-def cost_usd(model: str, usage: dict | None) -> float:
+def cost_usd(model: str, usage: dict | None) -> float | None:
+    """Cost in USD, or None when the model's rates are not in the table.
+
+    None rather than 0.0 on purpose. A model whose price is unknown reporting
+    $0.00 is a false number in a report about false numbers -- the totals would
+    silently understate, and nobody would see why. Tokens are always recorded,
+    so an unpriced model can be costed later.
+    """
     if not usage:
         return 0.0
-    rate_in, rate_out = PRICES.get(model.split(":", 1)[-1], (0.0, 0.0))
+    rates = PRICES.get(model.split(":", 1)[-1])
+    if rates is None:
+        return None
+    rate_in, rate_out = rates
     return (usage.get("input_tokens", 0) * rate_in
             + usage.get("output_tokens", 0) * rate_out) / 1_000_000
 

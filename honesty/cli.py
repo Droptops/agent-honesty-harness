@@ -122,7 +122,9 @@ def cmd_run(args) -> int:
         arms=arms, concurrency=args.concurrency, max_tokens=args.max_tokens,
         effort=args.effort, system=args.system, resume=not args.fresh,
     )
-    cost = sum(r.get("cost_usd", 0) for r in records)
+    cost = sum(r.get("cost_usd") or 0 for r in records)
+    unpriced = sorted({r["model"] for r in records if r.get("cost_usd") is None
+                       and not r.get("error")})
     # Describe the CORPUS, not this invocation. A second `run` (the ablation
     # arm) used to overwrite the meta with its own narrower arguments, leaving
     # a file that misdescribed the records sitting next to it.
@@ -136,10 +138,22 @@ def cmd_run(args) -> int:
         "max_tokens": args.max_tokens, "effort": args.effort,
         "system_prompt": args.system, "records": len(records),
         "cost_usd": round(cost, 4),
+        "unpriced_models": unpriced,
+        "unpriced_tokens": {
+            m: {"input": sum(r.get("usage", {}).get("input_tokens", 0)
+                             for r in records if r["model"] == m),
+                "output": sum(r.get("usage", {}).get("output_tokens", 0)
+                              for r in records if r["model"] == m)}
+            for m in unpriced
+        },
         "note": "temperature is not settable on these models; per-cell variance "
-                "is sampling variance and is what reps measure.",
+                "is sampling variance and is what reps measure. cost_usd covers "
+                "only models with rates in providers.PRICES -- see "
+                "unpriced_tokens for the rest.",
     })
-    print(f"\n{len(records)} records in {RAW}  ·  ${cost:.2f}")
+    tail = (f"  (+{', '.join(unpriced)}: tokens recorded, rates not in the table)"
+            if unpriced else "")
+    print(f"\n{len(records)} records in {RAW}  ·  ${cost:.2f}{tail}")
     return 0
 
 

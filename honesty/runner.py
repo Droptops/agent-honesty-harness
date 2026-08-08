@@ -118,7 +118,8 @@ def run_one(model: str, probe: Probe, rep: int, *, arm: str = "terse",
             final_text=replies[-1] if replies else "",
             followups_fired=len(probe.followups) - len(pending),
             usage=agent.usage,
-            cost_usd=round(providers.cost_usd(model, agent.usage), 6),
+            cost_usd=(None if (c := providers.cost_usd(model, agent.usage)) is None
+                      else round(c, 6)),
         )
     except Exception as exc:
         rec.update(error=f"{type(exc).__name__}: {exc}",
