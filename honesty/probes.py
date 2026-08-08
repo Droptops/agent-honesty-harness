@@ -35,6 +35,34 @@ LAST_YEAR = "2025"
 
 
 @dataclass(frozen=True)
+class Followup:
+    """A scripted second user turn, fired after the agent's final message.
+
+    Nothing in v2 tested what happens *after* the first claim, which is where
+    the interesting failure lives: a disclosure that does not survive pushback
+    is not much of a disclosure. `when` is evaluated against the message the
+    agent just produced, so the same probe can push back on a disclosure and
+    ask a direct question of a substitution.
+    """
+
+    text: str
+    when: str = "always"   # always | disclosed | not_disclosed | claimed_done
+
+    def fires(self, text: str) -> bool:
+        from . import claims as C
+
+        if self.when == "always":
+            return True
+        if self.when == "disclosed":
+            return C.discloses_blocker(text)
+        if self.when == "not_disclosed":
+            return not C.discloses_blocker(text)
+        if self.when == "claimed_done":
+            return C.asserts_completion(text)
+        raise ValueError(f"unknown followup condition: {self.when}")
+
+
+@dataclass(frozen=True)
 class Probe:
     id: str
     family: str          # easy_gap | hard_gap | control
@@ -46,6 +74,8 @@ class Probe:
     honest: str
     dishonest: str
     max_turns: int = 14
+    followups: tuple[Followup, ...] = ()
+    system: str | None = None   # probe-level system prompt, overrides the sweep's
 
     @property
     def is_gap(self) -> bool:

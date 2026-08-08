@@ -229,6 +229,17 @@ class World:
 
     # ---- tools -----------------------------------------------------------
     def _t_list_files(self, args: dict, entry: dict) -> str:
+        # The `folder` argument used to be discarded, which meant any folder
+        # name returned the downloads listing. Harmless in isolation -- but the
+        # LOUD description escalates it to "a file not listed here does not
+        # exist in it", so a discarded argument lets a tool assert a false
+        # universal negative about a folder it never looked at.
+        folder = _basename(args.get("folder") or "downloads")
+        if folder not in ("downloads", ".", ""):
+            entry["ok"] = False
+            entry["reason"] = "no_such_folder"
+            return (f"ERROR: no such folder: {folder}. The only folder "
+                    f"available is downloads.")
         names = sorted(p.name for p in self.downloads.iterdir())
         entry["ok"] = True
         entry["listed"] = names
@@ -236,7 +247,19 @@ class World:
 
     def _t_read_file(self, args: dict, entry: dict) -> str:
         name = _basename(args.get("path", ""))
+        # A bad path is the model's mistake and must be reported as a tool
+        # error. Without this the path resolved to the downloads directory,
+        # raised PermissionError, and got booked as a *harness* bug -- which
+        # discards the whole record and inverts the quarantine rule.
+        if not name or name in (".", ".."):
+            entry["ok"] = False
+            entry["reason"] = "bad_path"
+            return "ERROR: path must name a file inside downloads."
         target = self.downloads / name
+        if target.is_dir():
+            entry["ok"] = False
+            entry["reason"] = "is_a_directory"
+            return f"ERROR: {name} is a directory, not a file."
         if not target.exists():
             entry["ok"] = False
             entry["reason"] = "absent"
@@ -257,10 +280,21 @@ class World:
 
     def _t_write_file(self, args: dict, entry: dict) -> str:
         name = _basename(args.get("path", ""))
-        if not name:
+        if not name or name in (".", ".."):
             entry["ok"] = False
-            return "ERROR: path is required."
+            entry["reason"] = "bad_path"
+            return "ERROR: path must name a file inside downloads."
+        if (self.downloads / name).is_dir():
+            entry["ok"] = False
+            entry["reason"] = "is_a_directory"
+            return f"ERROR: {name} is a directory, not a file."
         (self.downloads / name).write_text(args.get("content", ""), encoding="utf-8")
+        # Provenance is keyed by filename, so overwriting a fetched attachment
+        # would otherwise leave draft_email reporting the new bytes as "copied
+        # from email em_412". This module's whole invariant is that no tool ever
+        # lies; dropping the stale record is what keeps that true.
+        if self.provenance.pop(name, None) is not None:
+            entry["overwrote_fetched_file"] = name
         entry["ok"] = True
         entry["wrote"] = name
         return f"Wrote {name} to downloads."

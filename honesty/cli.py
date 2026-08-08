@@ -181,6 +181,75 @@ def cmd_judge(args) -> int:
     return 0
 
 
+def cmd_label(args) -> int:
+    from . import labeling, runner
+    from .score import score_records
+
+    records = runner.load_jsonl(RAW)
+    if not records:
+        print(f"no records at {RAW}")
+        return 1
+    rows = score_records(records)
+
+    if args.score:
+        src = Path(args.score)
+        if not src.exists():
+            print(f"no such file: {src}\n"
+                  f"  the Download button on results/labeling.html saves it as "
+                  f"labels.json, usually in your Downloads folder.")
+            return 1
+        labels = json.loads(src.read_text(encoding="utf-8"))
+        res = labeling.agreement(labels, rows)
+        if res.get("error"):
+            print(res["error"])
+            return 1
+        k = res["cohens_kappa"]
+        print(f"=== HUMAN vs MECHANICAL ({res['n']} labelled) ===")
+        print(f"  raw agreement : {100*res['raw_agreement']:.1f}%  "
+              f"(meaningless alone on a skewed corpus)")
+        if res["kappa_valid"]:
+            print(f"  Cohen's kappa : {k:.3f}  — {labeling.interpret(k)}")
+        else:
+            print(f"  Cohen's kappa : UNDEFINED — {res['kappa_note']}")
+
+        # On a machine-constant corpus this is the whole result.
+        missed = res["detector_missed"]
+        print(f"\n  you called {res['human_non_honest']} row(s) not-honest; "
+              f"the detector missed {len(missed)} of them")
+        if missed:
+            print("  MEASURED FALSE NEGATIVES — the direction regex cannot self-detect:")
+            for d in missed:
+                print(f"    {d['uid']}\n      you={d['human']}  detector=HONEST "
+                      f"({d['machine_why']})")
+        if res["detector_overcalled"]:
+            print(f"\n  {len(res['detector_overcalled'])} row(s) the detector accused "
+                  f"and you did not — false positives, the more damaging direction:")
+            for d in res["detector_overcalled"]:
+                print(f"    {d['uid']}  detector={d['machine']} ({d['machine_why']})")
+        if not res["disagreements"]:
+            print("  no disagreements at all — report that as the n it is, not as "
+                  "validation; 50 rows of a saturated corpus is a weak test.")
+        print("\n  per class (human / machine / agreed):")
+        for cls, d in res["per_class"].items():
+            print(f"    {cls:14s} {d['human']:3d} / {d['machine']:3d} / {d['agreed']:3d}")
+        (RESULTS / "human_agreement.json").write_text(
+            json.dumps(res, indent=2), encoding="utf-8")
+        print(f"\n  written: {RESULTS / 'human_agreement.json'}")
+        return 0
+
+    items = labeling.sample(rows, records, n=args.n)
+    page = labeling.build_page(items, RESULTS / "labeling.html")
+    counts = {}
+    for it in items:
+        counts[it["uid"].split("|")[0]] = counts.get(it["uid"].split("|")[0], 0) + 1
+    print(f"{len(items)} transcripts sampled across {len(counts)} probes")
+    print(f"open: {page}")
+    print("\nThe page never shows the mechanical verdict — that is the point. "
+          "Label, download labels.json, then:")
+    print(f"  python -m honesty label --score labels.json")
+    return 0
+
+
 def cmd_all(args) -> int:
     for fn in (cmd_selftest, cmd_baselines):
         rc = fn(args)
@@ -227,6 +296,12 @@ def main(argv: list[str] | None = None) -> int:
     r = sub.add_parser("run"); add_run_args(r); r.set_defaults(func=cmd_run)
     sub.add_parser("report").set_defaults(func=cmd_report)
     a = sub.add_parser("all"); add_run_args(a); a.set_defaults(func=cmd_all)
+    lb = sub.add_parser("label", help="blind human labelling + Cohen's kappa")
+    lb.add_argument("--n", type=int, default=50)
+    lb.add_argument("--score", default=None, metavar="labels.json",
+                    help="score a downloaded labels.json against the scorer")
+    lb.set_defaults(func=cmd_label)
+
     j = sub.add_parser("judge")
     j.add_argument("--mode", default="dual", choices=["anthropic", "openai", "dual"])
     j.add_argument("--limit", type=int, default=40)
