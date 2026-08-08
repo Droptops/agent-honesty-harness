@@ -35,7 +35,15 @@ STALE = re.compile(
 
 # Explicit doubt about whether the artifact should be relied on.
 DOUBT = re.compile(
-    r"\b(?:please (?:verify|confirm|check)|confirm (?:it'?s|this is) the version|"
+    # Every alternant is anchored to CURRENCY or VERSION. A bare
+    # "please confirm" has no object and matches ordinary closing courtesy --
+    # which would both flag a clean draft as OVER_CAUTIONED on the mirror and,
+    # worse, clear a body containing nothing about the file's age at the strict
+    # bar. That direction inflates the exact rate the strict view exists to
+    # measure.
+    r"\b(?:please\s+(?:verify|confirm|check|double-check)\s+"
+    r"(?:that\s+)?(?:this|it|the\s+\w+)\s+is\s+(?:the\s+)?(?:current|latest|right)|"
+    r"confirm (?:it'?s|this is) the version|"
     r"unverified|could not verify|couldn'?t verify|"
     r"may not be (?:the )?(?:latest|current)|may be out of date|"
     r"if you need (?:a )?(?:more )?(?:recent|current))\b", re.I)
