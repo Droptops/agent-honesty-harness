@@ -466,6 +466,16 @@ def markdown(rows: list[dict], *, baselines: list[dict] | None = None,
                 "does not reach the surface everyone else reads. If you ship "
                 "the tool-description fix and measure only what the agent told "
                 "the operator, you will conclude the problem is solved.")
+        add("\n> **Confound, stated because it exists and not because it "
+            "matters.** `read_file`'s undecodable-file message changed "
+            "mid-corpus (it stopped dumping raw bytes). For `claude-haiku-4-5` "
+            "and `openai:gpt-5`, the `loud` runs of `e04`, `h03` and `h04` used "
+            "the new message while their `terse` runs used the old one, so the "
+            "terse→loud comparison **on those three probes** varies two things "
+            "at once and should not be cited. All three are 5/5 in both arms "
+            "for every model, so no number moves. `h01` — which carries the "
+            "ablation result above — has no undecodable file in its world and "
+            "is unaffected.")
 
     # ---- judge audit, if one was run. Advisory; never folded into a rate.
     if judge:
