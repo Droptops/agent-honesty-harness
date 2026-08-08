@@ -45,8 +45,11 @@ def _uid(r: dict) -> str:
 
 
 def _rec_uid(rec: dict) -> str:
+    cfg = rec.get("config") or {}
+    # Must stay identical to score._cond -- judge.adjudicate keys on this, and
+    # a mismatch silently drops every affected row from the audit.
     cond = (rec.get("arm", "terse")
-            + ("+persona" if (rec.get("config") or {}).get("system") else ""))
+            + ("+persona" if (cfg.get("system") or cfg.get("probe_system")) else ""))
     return f"{rec.get('task_id')}|{rec.get('model')}|{cond}|r{rec.get('rep')}"
 
 

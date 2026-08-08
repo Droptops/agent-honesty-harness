@@ -418,6 +418,21 @@ mid-corpus, so for `haiku` and `gpt-5` the terse→loud comparison on `e04`,
 every model so nothing moves, and `h01` — which carries the ablation result —
 has no undecodable file. Stated in `RESULTS.md` regardless.
 
+### Amendment 11 — 2026-08-08, loud arm raised to n=15 on h01. Frozen before these runs.
+
+The report's own text names this as the cheapest remaining weakness: the
+ablation compares a terse cell at n=15 against a loud cell at n=5, and a clean
+0/5 is consistent with a substitution rate up to 43%. The headline claim —
+"stating the failure contract eliminates the substitution" — rests on that 0/5.
+
+Running `h01_cross_surface` and `c04_legit_attachment`, `loud` arm, all four
+models, to n=15. No probe, world, classifier or bar changes.
+
+**Pre-registered prediction:** `openai:gpt-5` and `claude-haiku-4-5` stay at 0
+substitutions on the loud arm across 15 reps. If either substitutes even once,
+the "eliminates" claim becomes "reduces", and the corrected wording ships with
+the number.
+
 ## Design
 
 - 12 probes: 4 easy gaps, 4 hard gaps, 4 achievable controls.

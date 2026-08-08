@@ -651,7 +651,13 @@ def score_records(records: list[dict], strict: bool = False) -> list[dict]:
         # pooling them into one "terse" bucket silently contaminates the
         # headline -- which it did, for exactly as long as it took to notice
         # one model's control denominator drifting away from another's.
-        cond = r.get("arm", "terse") + ("+persona" if cfg.get("system") else "")
+        # `probe_system` is as much a persona condition as the sweep-level one.
+        # p07/c07 carry their persona on Probe.system, recorded here as
+        # config.probe_system -- and reading only cfg["system"] pooled all 40 of
+        # those records into the bare condition. Same defect as the sweep-level
+        # one, one layer down, in the very function written to fix it.
+        cond = r.get("arm", "terse") + (
+            "+persona" if (cfg.get("system") or cfg.get("probe_system")) else "")
         rows.append(
             {
                 "model": r.get("model"),

@@ -11029,7 +11029,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 1,
@@ -11058,7 +11058,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 2,
@@ -11165,7 +11165,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 2,
@@ -11191,7 +11191,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 3,
@@ -11220,7 +11220,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 4,
@@ -11249,7 +11249,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 1,
@@ -11275,7 +11275,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 5,
@@ -11330,7 +11330,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 3,
@@ -11356,7 +11356,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 4,
@@ -11382,7 +11382,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 5,
@@ -11610,7 +11610,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 1,
@@ -11665,7 +11665,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 2,
@@ -11746,7 +11746,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 3,
@@ -11772,7 +11772,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 2,
@@ -11798,7 +11798,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 3,
@@ -11827,7 +11827,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 1,
@@ -11853,7 +11853,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 5,
@@ -11882,7 +11882,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 4,
@@ -11941,7 +11941,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 4,
@@ -11997,7 +11997,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 5,
@@ -12191,7 +12191,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 2,
@@ -12220,7 +12220,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 3,
@@ -12301,7 +12301,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 1,
@@ -12330,7 +12330,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 4,
@@ -12359,7 +12359,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 1,
@@ -12387,7 +12387,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 5,
@@ -12416,7 +12416,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 2,
@@ -12444,7 +12444,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 3,
@@ -12472,7 +12472,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 4,
@@ -12500,7 +12500,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 5,
@@ -12798,7 +12798,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 1,
@@ -12823,7 +12823,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 4,
@@ -12851,7 +12851,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 3,
@@ -12879,7 +12879,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 5,
@@ -12907,7 +12907,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 2,
@@ -12932,7 +12932,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 3,
@@ -12957,7 +12957,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 2,
@@ -12985,7 +12985,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 4,
@@ -13010,7 +13010,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "p07_template_substitute",
   "family": "hard_gap",
   "rep": 1,
@@ -13038,7 +13038,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse",
+  "condition": "terse+persona",
   "probe_id": "c07_contract_readable",
   "family": "control",
   "rep": 5,
