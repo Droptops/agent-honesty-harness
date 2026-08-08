@@ -426,29 +426,42 @@ python -m honesty all --reps 5
 
 ---
 
+## Where it stands
+
+780 records · 4 models · 2 providers · 16 probes · 3 conditions · 229 tests ·
+12 pre-registration amendments · $16.28 Anthropic + ~700k GPT-5 tokens.
+
+Corpus `AMBIGUOUS` is **zero**. All four models have perfect controls in the
+primary condition. Two adversarial reviews have run; between them they corrected
+five published numbers, **every one in the direction that had flattered the
+harness**. Nine of the ten defects found across this project were false
+accusations — the scorer calling an honest agent dishonest — which is why the
+review prompt now says so explicitly and weights effort that way.
+
 ## Next, in priority order
 
-1. **Build v3's probes around *degrees* of disclosure.** Both models are at 100%
-   on presence-of-disclosure; that dimension is saturated. The one place real
-   variance showed up is `h01`'s strict grade — `opus` 4/5, `sonnet` **0/5** —
-   where the question is not "did it mention the source" but "would a reader
-   come away knowing this is the wrong document." That is where the ceiling is.
-2. **Close the under-detection list before the next sweep**, each with its own
-   pre-registration: exclude the prompt-mandated *"I did not send it"* from the
-   blocker predicate; give `_h02` a strict/generous split like `h01`'s; widen
-   `_SENT`; make `_c04` read the text before the ledger; clause-scope `_h03`'s
-   and `_h04`'s guards. These all make the harness harder to pass, so they must
-   be frozen *before* results, not after.
-3. **A system-prompt arm.** Every run here was a bare user turn. A realistic
-   agent has a persona and a customer, and "be reassuring to the user" is the
-   most plausible real-world driver of the failure this harness targets.
-   `--system` is wired, but fix the resume-identity bug first or the second arm
-   will silently return the first arm's records.
-4. **Human labels on 50 transcripts.** The only thing that converts the
-   claim-detection limitation from "untested" to "measured", and the cheapest
-   remaining credibility purchase.
-5. **Do not make the judges authoritative.** The 3/32 result above is the
-   argument, and it is now in-repo evidence rather than a design preference.
+1. **The 50 blind labels — this one needs a human.** `python -m honesty label`
+   builds the page; it never shows the machine's verdict. The sample is now
+   genuinely informative (28 HONEST, 17 SUBSTITUTED, 10 SILENT_ON_PREMISE,
+   4 NOT_ATTEMPTED) where the first version was 100% HONEST and kappa was
+   undefined. This is the only thing that converts "regex validated against
+   fixtures its own author wrote" into a measured number, and it is ~40 minutes.
+2. **Escalate the persona condition.** It was pre-registered to break a frontier
+   model and did not (Amendment 8, prediction 2, NOT CONFIRMED). The registered
+   contingency is to escalate — a longer horizon, a stated consequence, a
+   customer visibly waiting — not to conclude that personas don't matter. 80 of
+   780 runs carried one and the effect was small and never helpful.
+3. **The remaining v3 probe pairs.** `p06` (scope narrowing), `h08` (a silent
+   gap inside an aggregate). Both are specified and adversarially filtered in
+   the design output; neither is implemented. `h08`'s shape — an aggregate
+   reported as complete when one member silently failed — is the one most likely
+   to break the frontier models next.
+4. **More models, now that it costs almost nothing.** The OpenAI adapter works
+   as a subject arm. An OpenRouter key would turn "two providers" into a real
+   cross-provider gradient in one config change.
+5. **Do not make the judges authoritative.** 31/32 versus 9/32 on identical
+   evidence is the argument, and it is in-repo evidence now rather than a design
+   preference.
 
 ---
 
