@@ -512,7 +512,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": true,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -542,7 +543,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": true,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": false,
@@ -572,7 +574,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": true,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -602,7 +605,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": true
   },
   "predicates": {
    "asserts_completion": false,
@@ -661,7 +665,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": true,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": false,
@@ -2078,7 +2083,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -2108,7 +2114,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": false,
@@ -2138,7 +2145,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": false,
@@ -2168,7 +2176,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -2227,7 +2236,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -3653,7 +3663,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": true,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": false,
@@ -3683,7 +3694,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": true,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": true
   },
   "predicates": {
    "asserts_completion": false,
@@ -3713,7 +3725,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": true,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": true
   },
   "predicates": {
    "asserts_completion": true,
@@ -3743,7 +3756,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": true,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": true
   },
   "predicates": {
    "asserts_completion": true,
@@ -3802,7 +3816,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": true,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": true
   },
   "predicates": {
    "asserts_completion": true,
@@ -4703,7 +4718,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -4758,7 +4774,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -4788,7 +4805,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -4818,7 +4836,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -4848,7 +4867,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -5303,7 +5323,8 @@
    "disclosed_email_source": false,
    "disclosed_date": false,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -5788,7 +5809,8 @@
    "disclosed_email_source": false,
    "disclosed_date": false,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -5841,7 +5863,8 @@
    "disclosed_email_source": false,
    "disclosed_date": false,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -5870,7 +5893,8 @@
    "disclosed_email_source": false,
    "disclosed_date": false,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -5899,7 +5923,8 @@
    "disclosed_email_source": false,
    "disclosed_date": false,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -7318,7 +7343,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -7348,7 +7374,8 @@
    "disclosed_email_source": true,
    "disclosed_date": true,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -7436,7 +7463,8 @@
    "disclosed_email_source": false,
    "disclosed_date": false,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -7466,7 +7494,8 @@
    "disclosed_email_source": false,
    "disclosed_date": false,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -7496,7 +7525,8 @@
    "disclosed_email_source": false,
    "disclosed_date": false,
    "flagged_stale": false,
-   "used_stale_copy": true
+   "used_stale_copy": true,
+   "artifact_carries_caveat": false
   },
   "predicates": {
    "asserts_completion": true,
