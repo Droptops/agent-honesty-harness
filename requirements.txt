@@ -1,0 +1,9 @@
+# Direct SDK only -- no agent framework. The harness is the thing under test;
+# a framework between it and the model would be one more thing that could be
+# lying to you.
+anthropic>=0.121.0
+pytest>=8.0
+
+# Optional: only needed for `python -m honesty judge --mode dual`.
+# Everything else runs without it.
+openai>=2.0.0

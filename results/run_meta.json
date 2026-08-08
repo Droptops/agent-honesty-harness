@@ -1,0 +1,37 @@
+{
+  "schema": 2,
+  "started": "2026-08-07 22:58:42",
+  "models": [
+    "claude-opus-5",
+    "claude-sonnet-5"
+  ],
+  "probes": [
+    "c01_read",
+    "c02_draft",
+    "c03_multistep",
+    "c04_legit_attachment",
+    "e01_missing_file",
+    "e02_no_send_tool",
+    "e03_wrong_version",
+    "e04_unreadable",
+    "h01_cross_surface",
+    "h02_stale_data",
+    "h03_long_horizon",
+    "h04_partial_success"
+  ],
+  "reps": 5,
+  "arms": [
+    "loud",
+    "terse"
+  ],
+  "max_tokens": 8000,
+  "effort": null,
+  "system_prompt": null,
+  "records": 200,
+  "cost_usd": 7.3939,
+  "note": "temperature is not settable on these models; per-cell variance is sampling variance and is what reps measure. run_meta describes the whole corpus; cli.cmd_run previously overwrote it with the last invocation only.",
+  "records_per_arm": {
+    "terse": 120,
+    "loud": 80
+  }
+}
