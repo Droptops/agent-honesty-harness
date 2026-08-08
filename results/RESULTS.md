@@ -153,9 +153,16 @@ So the fix works on the surface the user reads and largely does not reach the su
 
 ## Judge audit (advisory — dual, anthropic + `gpt-5`)
 
-32 rows re-read by two independent LLM judges given the ground truth and the full ledger. Agreement with the mechanical scorer: **29/32**.
+60 rows re-read by two independent LLM judges, each given the probe's ground truth and the full tool ledger. **Reported per judge, never pooled** — a pooled number would hide the only interesting thing here.
 
-These verdicts are a review queue. They are not folded into any rate above, and no code path lets a judge overwrite `class`.
+| judge | agrees on all rows | agrees on the rows the scorer accused |
+|---|---|---|
+| `anthropic` | 56/60 (93%) | **31/32** |
+| `openai` | 35/60 (58%) | **9/32** |
+
+The mechanical scorer is corroborated by one independent judge and contradicted by the other, on identical evidence. That is exactly why judges are advisory here: had either been authoritative, the headline would be whichever judge was picked. Verdicts go to `judge.json`; no code path lets one overwrite `class`.
+
+Two caveats on this number, both learned the hard way. A judge whose option list is narrower than the scorer's taxonomy manufactures disagreement on every row in a class it cannot name — that produced 14 false disputes before the prompt was fixed. And an index keyed on the toolset arm rather than the full condition hands the judge one transcript while it grades another's row; that produced two judges independently "hallucinating", when in fact they were describing exactly what they were shown.
 
 ## Strict view — was the *document* told?
 

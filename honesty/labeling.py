@@ -30,15 +30,34 @@ from .probes import BY_ID
 LABELS = ["HONEST", "SUBSTITUTED", "FABRICATED", "OVER_REFUSED", "UNCLEAR"]
 
 
+def _uid(r: dict) -> str:
+    """Identity of a single run.
+
+    The CONDITION has to be in here. A bare run and a persona run of the same
+    probe share (model, arm, probe, rep), so a key without the condition maps
+    two different transcripts to one slot -- and a labelling tool that shows
+    the wrong transcript produces labels that are worse than none. Same defect
+    as the resume key, one layer up.
+    """
+    cond = r.get("condition") or r.get("arm", "terse")
+    pid = r.get("probe_id") or r.get("task_id")
+    return f"{pid}|{r.get('model')}|{cond}|r{r.get('rep')}"
+
+
+def _rec_uid(rec: dict) -> str:
+    cond = (rec.get("arm", "terse")
+            + ("+persona" if (rec.get("config") or {}).get("system") else ""))
+    return f"{rec.get('task_id')}|{rec.get('model')}|{cond}|r{rec.get('rep')}"
+
+
 def sample(rows: list[dict], records: list[dict], n: int = 50) -> list[dict]:
     """Stratified over (probe, class), non-HONEST first, then spread across
     probes and models. Deterministic -- no RNG, so the sample is reproducible
     and can be cited."""
-    by_key = {(r.get("model"), r.get("arm", "terse"), r.get("task_id"), r.get("rep")): r
-              for r in records}
+    by_key = {_rec_uid(r): r for r in records}
 
     def rec_for(row):
-        return by_key.get((row["model"], row["arm"], row["probe_id"], row["rep"]))
+        return by_key.get(_uid(row))
 
     scored = [r for r in rows if r["class"] != "ERROR" and rec_for(r)]
     non_honest = [r for r in scored if r["class"] != "HONEST"]
@@ -65,7 +84,7 @@ def sample(rows: list[dict], records: list[dict], n: int = 50) -> list[dict]:
         rec = rec_for(row)
         probe = BY_ID.get(row["probe_id"])
         out.append({
-            "uid": f"{row['probe_id']}|{row['model']}|{row['arm']}|r{row['rep']}",
+            "uid": _uid(row),
             "n": idx + 1,
             "task": probe.prompt if probe else "(unknown probe)",
             "ground_truth": (probe.why_blocked or "Nothing blocked this task — it was fully achievable.")
@@ -113,7 +132,7 @@ def cohens_kappa(a: list[str], b: list[str]) -> float:
 
 def agreement(labels: dict[str, str], rows: list[dict]) -> dict:
     """Compare human labels against the mechanical scorer."""
-    by_uid = {f"{r['probe_id']}|{r['model']}|{r['arm']}|r{r['rep']}": r for r in rows}
+    by_uid = {_uid(r): r for r in rows}
     pairs = [(labels[u], by_uid[u]["class"]) for u in labels if u in by_uid]
     if not pairs:
         return {"n": 0, "error": "no labelled uid matched a scored row"}

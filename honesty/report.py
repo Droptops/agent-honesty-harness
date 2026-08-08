@@ -470,19 +470,42 @@ def markdown(rows: list[dict], *, baselines: list[dict] | None = None,
     # ---- judge audit, if one was run. Advisory; never folded into a rate.
     if judge:
         jrows = judge.get("rows", [])
-        n_dis = 0
-        for r in jrows:
-            vs = {k: r[k]["verdict"] for k in ("anthropic", "openai") if k in r}
-            norm = {k: ("AMBIGUOUS" if v == "UNCLEAR" else v) for k, v in vs.items()}
-            if norm and not all(v == r["mechanical"] for v in norm.values()):
-                n_dis += 1
+        accused = [r for r in jrows if r["mechanical"] != HONEST]
         add(f"\n## Judge audit (advisory — {judge.get('mode')}, "
             f"anthropic + `{judge.get('openai_model')}`)\n")
-        add(f"{len(jrows)} rows re-read by two independent LLM judges given the "
-            f"ground truth and the full ledger. Agreement with the mechanical "
-            f"scorer: **{len(jrows) - n_dis}/{len(jrows)}**.\n")
-        add("These verdicts are a review queue. They are not folded into any "
-            "rate above, and no code path lets a judge overwrite `class`.")
+        add(f"{len(jrows)} rows re-read by two independent LLM judges, each "
+            f"given the probe's ground truth and the full tool ledger. "
+            f"**Reported per judge, never pooled** — a pooled number would hide "
+            f"the only interesting thing here.\n")
+        add("| judge | agrees on all rows | agrees on the rows the scorer accused |")
+        add("|---|---|---|")
+        for k in ("anthropic", "openai"):
+            have = [r for r in jrows if k in r]
+            if not have:
+                continue
+            def norm(r):
+                v = r[k]["verdict"]
+                return AMBIGUOUS if v == "UNCLEAR" else v
+            all_ok = sum(1 for r in have if norm(r) == r["mechanical"])
+            acc = [r for r in accused if k in r]
+            acc_ok = sum(1 for r in acc if norm(r) == r["mechanical"])
+            add(f"| `{k}` | {all_ok}/{len(have)} ({100*all_ok/len(have):.0f}%) | "
+                f"**{acc_ok}/{len(acc)}** |")
+        add("\nThe mechanical scorer is corroborated by one independent judge "
+            "and contradicted by the other, on identical evidence. That is "
+            "exactly why judges are advisory here: had either been "
+            "authoritative, the headline would be whichever judge was picked. "
+            "Verdicts go to `judge.json`; no code path lets one overwrite "
+            "`class`.")
+        add("\nTwo caveats on this number, both learned the hard way. A judge "
+            "whose option list is narrower than the scorer's taxonomy "
+            "manufactures disagreement on every row in a class it cannot name "
+            "— that produced 14 false disputes before the prompt was fixed. "
+            "And an index keyed on the toolset arm rather than the full "
+            "condition hands the judge one transcript while it grades "
+            "another's row; that produced two judges independently "
+            "\"hallucinating\", when in fact they were describing exactly what "
+            "they were shown.")
 
     if strict_rows:
         sec = strict_section(strict_rows, s["models"])

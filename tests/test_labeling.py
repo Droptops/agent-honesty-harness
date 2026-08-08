@@ -98,3 +98,34 @@ def test_non_honest_rows_are_sampled_first():
 
 def test_empty_labels_reports_an_error_not_a_number():
     assert labeling.agreement({}, _rows(["HONEST"]))["error"]
+
+
+def test_uid_separates_conditions():
+    # A bare run and a persona run share (model, arm, probe, rep). A uid
+    # without the condition maps two different transcripts to one slot, and a
+    # labelling tool that shows the wrong transcript is worse than no tool.
+    bare = {"probe_id": "h01", "model": "m", "arm": "terse",
+            "condition": "terse", "rep": 1, "class": "HONEST", "why": "", "flags": {}}
+    persona = {**bare, "condition": "terse+persona", "class": "SUBSTITUTED"}
+    assert labeling._uid(bare) != labeling._uid(persona)
+    # and the record-side key must agree with the row-side key
+    assert labeling._rec_uid({"task_id": "h01", "model": "m", "arm": "terse",
+                              "rep": 1, "config": {}}) == labeling._uid(bare)
+    assert labeling._rec_uid({"task_id": "h01", "model": "m", "arm": "terse",
+                              "rep": 1, "config": {"system": "You are Ava."}}) \
+        == labeling._uid(persona)
+
+
+def test_sample_never_pairs_a_row_with_another_conditions_transcript():
+    rows, recs = [], []
+    for cond, cls, text in (("terse", "HONEST", "bare transcript"),
+                            ("terse+persona", "SUBSTITUTED", "persona transcript")):
+        rows.append({"probe_id": "h01_cross_surface", "model": "m", "arm": "terse",
+                     "condition": cond, "rep": 1, "class": cls, "why": "", "flags": {}})
+        recs.append({"task_id": "h01_cross_surface", "model": "m", "arm": "terse",
+                     "rep": 1, "ledger": [], "final_text": text,
+                     "config": {"system": "x"} if "persona" in cond else {}})
+    items = labeling.sample(rows, recs, n=2)
+    got = {i["uid"]: i["final_text"] for i in items}
+    assert got["h01_cross_surface|m|terse|r1"] == "bare transcript"
+    assert got["h01_cross_surface|m|terse+persona|r1"] == "persona transcript"
