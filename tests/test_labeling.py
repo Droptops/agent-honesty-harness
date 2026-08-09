@@ -86,14 +86,43 @@ def test_sample_is_blind_and_stratified():
         assert "class" not in it and "why" not in it
 
 
-def test_non_honest_rows_are_sampled_first():
-    rows = _rows(["HONEST"] * 10 + ["SUBSTITUTED"])
-    for i, r in enumerate(rows):
-        r["rep"] = i
-    records = [{"model": "m", "arm": "terse", "task_id": r["probe_id"], "rep": r["rep"],
-                "ledger": [], "final_text": "t"} for r in rows]
-    items = labeling.sample(rows, records, n=3)
-    assert items[0]["uid"].startswith("p10|"), "the minority class must not be missed"
+def _corpus(n_honest, n_accused):
+    rows, recs = [], []
+    for i in range(n_honest + n_accused):
+        cls = "HONEST" if i < n_honest else "SUBSTITUTED"
+        r = {"probe_id": f"probe{i % 4}", "model": f"m{i % 2}", "arm": "terse",
+             "condition": "terse", "rep": i, "class": cls, "why": "", "flags": {}}
+        rows.append(r)
+        recs.append({"task_id": r["probe_id"], "model": r["model"], "arm": "terse",
+                     "rep": i, "ledger": [], "final_text": "t", "config": {}})
+    return rows, recs
+
+
+def test_sample_is_balanced_between_accused_and_cleared():
+    # An all-accused sample cannot detect a false negative and leaves the
+    # machine's labels constant, which makes kappa undefined. An all-cleared
+    # one cannot detect a false positive. Both directions have to be present.
+    rows, recs = _corpus(n_honest=200, n_accused=73)
+    items = labeling.sample(rows, recs, n=60)
+    by = {labeling._uid(r): r for r in rows}
+    acc = sum(1 for i in items if by[i["uid"]]["class"] != "HONEST")
+    assert len(items) == 60
+    assert 25 <= acc <= 35, f"expected roughly half accused, got {acc}"
+
+
+def test_sample_takes_every_accused_row_when_they_are_scarce():
+    rows, recs = _corpus(n_honest=200, n_accused=3)
+    items = labeling.sample(rows, recs, n=20)
+    by = {labeling._uid(r): r for r in rows}
+    assert sum(1 for i in items if by[i["uid"]]["class"] != "HONEST") == 3
+    assert len(items) == 20
+
+
+def test_sample_degrades_gracefully_when_the_corpus_is_smaller_than_n():
+    rows, recs = _corpus(n_honest=5, n_accused=2)
+    items = labeling.sample(rows, recs, n=60)
+    assert len(items) == 7
+    assert len({i["uid"] for i in items}) == 7
 
 
 def test_empty_labels_reports_an_error_not_a_number():
@@ -129,3 +158,16 @@ def test_sample_never_pairs_a_row_with_another_conditions_transcript():
     got = {i["uid"]: i["final_text"] for i in items}
     assert got["h01_cross_surface|m|terse|r1"] == "bare transcript"
     assert got["h01_cross_surface|m|terse+persona|r1"] == "persona transcript"
+
+
+def test_label_options_cover_every_class_the_scorer_can_emit():
+    # A rater whose option list is narrower than the scorer's taxonomy has no
+    # way to name a class it cannot see, picks the nearest thing, and every
+    # such row reads as a disagreement. That defect manufactured 14 false
+    # disputes in the first judge run; it must not repeat on the human side.
+    from honesty.score import DEFAULT_CLASSES
+    # The strict view's two extra classes are not labelled here: the page
+    # shows rows from the default scoring view only.
+    missing = set(DEFAULT_CLASSES) - set(labeling.LABELS)
+    assert not missing, f"no label button for: {sorted(missing)}"
+    assert set(labeling.LABEL_HELP) == set(labeling.LABELS)

@@ -31,8 +31,9 @@ from .probes import BY_ID
 # than the judge's, every row in a class the judge cannot name reads as a
 # disagreement -- 14 manufactured "disputes" in one run, all of them the option
 # list being stale rather than anyone being wrong.
-VERDICTS = ["HONEST", "SUBSTITUTED", "FABRICATED", "OVER_REFUSED",
-            "SILENT_ON_PREMISE", "NOT_ATTEMPTED", "UNCLEAR"]
+from .score import DEFAULT_CLASSES
+
+VERDICTS = list(DEFAULT_CLASSES) + ["UNCLEAR"]
 
 _SCHEMA = {
     "type": "object",
