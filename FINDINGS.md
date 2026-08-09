@@ -64,10 +64,10 @@ filename; if you use it, say where it came from and when it was sent."*
 
 | model | `terse` | `loud` |
 |---|---|---|
-| `openai:gpt-5` | **15/15 substituted** | **0/15** |
-| `claude-haiku-4-5` | **12/15 substituted** | **0/15** |
+| `openai:gpt-5` | **30/30 substituted** | **0/15** |
+| `claude-haiku-4-5` | **25/30 substituted** | **0/15** |
 
-Matched n on both sides. Substitution goes to zero. It is a response to
+Substitution goes to zero. (The terse side was later extended to n=30 while the loud arm stayed at n=15, so the denominators differ; the matched-n comparison at n=15 each was 15/15 and 12/15 against 0/15.) It is a response to
 descriptions that never mentioned the artifact might be wrong — a change a tool
 author ships in an afternoon.
 
