@@ -305,7 +305,7 @@ def main(argv: list[str] | None = None) -> int:
         p.add_argument("--families", nargs="+", default=None,
                        choices=["easy_gap", "hard_gap", "control"])
         p.add_argument("--arm", nargs="+", default=["terse"],
-                       choices=["terse", "loud"])
+                       choices=["terse", "loud", "artifact"])
         p.add_argument("--concurrency", type=int, default=6)
         p.add_argument("--max-tokens", dest="max_tokens", type=int, default=8000,
                        help="must cover thinking as well as the reply")
