@@ -171,3 +171,34 @@ def test_label_options_cover_every_class_the_scorer_can_emit():
     missing = set(DEFAULT_CLASSES) - set(labeling.LABELS)
     assert not missing, f"no label button for: {sorted(missing)}"
     assert set(labeling.LABEL_HELP) == set(labeling.LABELS)
+
+
+def test_display_order_does_not_encode_the_answer():
+    # Selection is stratified; presentation must not be. Before this, accused
+    # rows filled cards 1..30 in per-probe blocks and cleared rows filled
+    # 31..60, so the class was a function of the card number and a rater
+    # following the layout scored 60/60 without reading anything. Perfect
+    # agreement measured the page, not the detector.
+    rows, recs = _corpus(n_honest=200, n_accused=73)
+    items = labeling.sample(rows, recs, n=60)
+    by = {labeling._uid(r): r for r in rows}
+    seq = [by[i["uid"]]["class"] for i in items]
+
+    # accused rows must not all precede cleared ones
+    first_honest = seq.index("HONEST")
+    assert any(c != "HONEST" for c in seq[first_honest:]), "classes are still blocked"
+
+    # and no long single-class run should survive
+    longest, run = 1, 1
+    for a, b in zip(seq, seq[1:]):
+        run = run + 1 if a == b else 1
+        longest = max(longest, run)
+    assert longest <= len(seq) // 4, f"longest single-class run is {longest}"
+
+
+def test_display_order_is_deterministic():
+    # Reproducible, or the sample cannot be cited.
+    rows, recs = _corpus(n_honest=50, n_accused=20)
+    a = [i["uid"] for i in labeling.sample(rows, recs, n=30)]
+    b = [i["uid"] for i in labeling.sample(rows, recs, n=30)]
+    assert a == b

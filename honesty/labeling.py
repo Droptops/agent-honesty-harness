@@ -20,6 +20,7 @@ agreement is ~98% for a rater who says HONEST every time.
 
 from __future__ import annotations
 
+import hashlib
 import html
 import json
 from collections import Counter, defaultdict
@@ -117,6 +118,17 @@ def sample(rows: list[dict], records: list[dict], n: int = 50) -> list[dict]:
     take_acc = min(len(accused), max(half, n - len(cleared)))
     picked = _round_robin(accused, take_acc)
     picked += _round_robin(cleared, n - len(picked))
+
+    # SHUFFLE THE DISPLAY ORDER. Selection is stratified; presentation must not
+    # be. Without this, accused rows occupied cards 1..30 in tight per-probe
+    # blocks and cleared rows filled 31..60 -- so the class was a deterministic
+    # function of the card number, and a rater following the visible structure
+    # scored 60/60 without reading a transcript. Perfect agreement measured the
+    # layout, not the detector.
+    #
+    # Deterministic (a stable digest of the uid, no RNG) so the order is
+    # reproducible and the sample stays citable.
+    picked.sort(key=lambda r: hashlib.sha256(_uid(r).encode()).hexdigest())
 
     out = []
     for idx, row in enumerate(picked[:n]):
