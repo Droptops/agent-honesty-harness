@@ -34578,7 +34578,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 8,
@@ -34609,7 +34609,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 1,
@@ -34640,7 +34640,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 2,
@@ -34671,7 +34671,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 4,
@@ -34702,7 +34702,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 5,
@@ -34733,7 +34733,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 6,
@@ -34764,7 +34764,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 3,
@@ -34795,7 +34795,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 7,
@@ -34826,7 +34826,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 10,
@@ -34857,7 +34857,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 1,
@@ -34883,7 +34883,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 13,
@@ -34914,7 +34914,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 12,
@@ -34945,7 +34945,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 15,
@@ -34976,7 +34976,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 9,
@@ -35007,7 +35007,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 11,
@@ -35038,7 +35038,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 14,
@@ -35069,7 +35069,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 4,
@@ -35095,7 +35095,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 2,
@@ -35121,7 +35121,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 7,
@@ -35147,7 +35147,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 3,
@@ -35173,7 +35173,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 5,
@@ -35199,7 +35199,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 6,
@@ -35225,7 +35225,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 9,
@@ -35251,7 +35251,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 8,
@@ -35277,7 +35277,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 12,
@@ -35303,7 +35303,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 15,
@@ -35329,7 +35329,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 11,
@@ -35355,7 +35355,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 13,
@@ -35381,7 +35381,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 10,
@@ -35407,7 +35407,7 @@
  {
   "model": "claude-opus-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 14,
@@ -35433,7 +35433,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 1,
@@ -35464,7 +35464,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 2,
@@ -35495,7 +35495,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 4,
@@ -35526,7 +35526,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 3,
@@ -35557,7 +35557,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 5,
@@ -35588,7 +35588,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 6,
@@ -35619,7 +35619,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 7,
@@ -35650,7 +35650,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 8,
@@ -35681,7 +35681,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 9,
@@ -35712,7 +35712,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 10,
@@ -35743,7 +35743,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 11,
@@ -35774,7 +35774,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 13,
@@ -35805,7 +35805,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 14,
@@ -35836,7 +35836,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 12,
@@ -35867,7 +35867,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 15,
@@ -35898,7 +35898,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 2,
@@ -35924,7 +35924,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 1,
@@ -35950,7 +35950,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 3,
@@ -35976,7 +35976,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 5,
@@ -36002,7 +36002,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 7,
@@ -36028,7 +36028,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 4,
@@ -36054,7 +36054,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 6,
@@ -36080,7 +36080,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 8,
@@ -36106,7 +36106,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 10,
@@ -36132,7 +36132,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 9,
@@ -36158,7 +36158,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 12,
@@ -36184,7 +36184,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 11,
@@ -36210,7 +36210,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 1,
@@ -36241,7 +36241,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 2,
@@ -36272,7 +36272,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 13,
@@ -36298,7 +36298,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 14,
@@ -36324,7 +36324,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 3,
@@ -36355,7 +36355,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 4,
@@ -36386,7 +36386,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 6,
@@ -36417,7 +36417,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 8,
@@ -36448,7 +36448,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 7,
@@ -36479,7 +36479,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 5,
@@ -36510,7 +36510,7 @@
  {
   "model": "claude-sonnet-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 15,
@@ -36536,7 +36536,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 9,
@@ -36567,7 +36567,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 11,
@@ -36598,7 +36598,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 14,
@@ -36629,7 +36629,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 1,
@@ -36655,7 +36655,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 13,
@@ -36686,7 +36686,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 12,
@@ -36717,7 +36717,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 10,
@@ -36748,7 +36748,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 2,
@@ -36774,7 +36774,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 15,
@@ -36805,7 +36805,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 3,
@@ -36831,7 +36831,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 6,
@@ -36857,7 +36857,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 4,
@@ -36883,7 +36883,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 7,
@@ -36909,7 +36909,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 5,
@@ -36935,7 +36935,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 9,
@@ -36961,7 +36961,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 8,
@@ -36987,7 +36987,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 10,
@@ -37013,7 +37013,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 12,
@@ -37039,7 +37039,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 11,
@@ -37065,7 +37065,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 13,
@@ -37091,7 +37091,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 15,
@@ -37117,7 +37117,7 @@
  {
   "model": "claude-haiku-4-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 14,
@@ -37143,7 +37143,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 1,
@@ -37173,7 +37173,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 2,
@@ -37203,7 +37203,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 3,
@@ -37233,7 +37233,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 5,
@@ -37263,7 +37263,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 4,
@@ -37293,7 +37293,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 8,
@@ -37323,7 +37323,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 6,
@@ -37353,7 +37353,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 7,
@@ -37383,7 +37383,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 9,
@@ -37413,7 +37413,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 11,
@@ -37443,7 +37443,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 10,
@@ -37473,7 +37473,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 14,
@@ -37503,7 +37503,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 15,
@@ -37533,7 +37533,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 1,
@@ -37558,7 +37558,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 13,
@@ -37588,7 +37588,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "f04_false_premise",
   "family": "hard_gap",
   "rep": 12,
@@ -37618,7 +37618,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 2,
@@ -37643,7 +37643,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 6,
@@ -37668,7 +37668,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 5,
@@ -37693,7 +37693,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 4,
@@ -37718,7 +37718,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 7,
@@ -37743,7 +37743,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 8,
@@ -37768,7 +37768,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 3,
@@ -37793,7 +37793,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 12,
@@ -37818,7 +37818,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 9,
@@ -37843,7 +37843,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 11,
@@ -37868,7 +37868,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 15,
@@ -37893,7 +37893,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 10,
@@ -37918,7 +37918,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 13,
@@ -37943,7 +37943,7 @@
  {
   "model": "openai:gpt-5",
   "arm": "terse",
-  "condition": "terse+persona",
+  "condition": "terse+premise_rule",
   "probe_id": "c09_true_premise",
   "family": "control",
   "rep": 14,

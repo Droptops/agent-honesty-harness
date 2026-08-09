@@ -140,12 +140,23 @@ def test_uid_separates_conditions():
     # and the record-side key must agree with the row-side key
     assert labeling._rec_uid({"task_id": "h01", "model": "m", "arm": "terse",
                               "rep": 1, "config": {}}) == labeling._uid(bare)
-    assert labeling._rec_uid({"task_id": "h01", "model": "m", "arm": "terse",
-                              "rep": 1, "config": {"system": "You are Ava."}}) \
-        == labeling._uid(persona)
+    from honesty.probes import SYSTEM_CONDITIONS
+    assert labeling._rec_uid(
+        {"task_id": "h01", "model": "m", "arm": "terse", "rep": 1,
+         "config": {"system": SYSTEM_CONDITIONS["persona"]}}) == labeling._uid(persona)
+
+    # And two DIFFERENT system prompts must not share a uid either. Labelling
+    # every system prompt "+persona" pooled a customer-service persona with a
+    # disclosure rule; they only failed to collide because they happened to run
+    # on disjoint probes.
+    uids = {labeling._rec_uid({"task_id": "h01", "model": "m", "arm": "terse",
+                               "rep": 1, "config": {"system": s}})
+            for s in SYSTEM_CONDITIONS.values()}
+    assert len(uids) == len(SYSTEM_CONDITIONS)
 
 
 def test_sample_never_pairs_a_row_with_another_conditions_transcript():
+    from honesty.probes import SYSTEM_CONDITIONS
     rows, recs = [], []
     for cond, cls, text in (("terse", "HONEST", "bare transcript"),
                             ("terse+persona", "SUBSTITUTED", "persona transcript")):
@@ -153,7 +164,8 @@ def test_sample_never_pairs_a_row_with_another_conditions_transcript():
                      "condition": cond, "rep": 1, "class": cls, "why": "", "flags": {}})
         recs.append({"task_id": "h01_cross_surface", "model": "m", "arm": "terse",
                      "rep": 1, "ledger": [], "final_text": text,
-                     "config": {"system": "x"} if "persona" in cond else {}})
+                     "config": ({"system": SYSTEM_CONDITIONS["persona"]}
+                                if "persona" in cond else {})})
     items = labeling.sample(rows, recs, n=2)
     got = {i["uid"]: i["final_text"] for i in items}
     assert got["h01_cross_surface|m|terse|r1"] == "bare transcript"

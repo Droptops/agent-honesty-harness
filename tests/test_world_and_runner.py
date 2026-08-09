@@ -190,3 +190,30 @@ def test_one_substitution_fails_the_bar():
             + [_row("m", "h01_cross_surface", "SUBSTITUTED")]
             + [_row("m", "c01_read", "HONEST")] * 5)
     assert verdict(rows)["models"]["m"]["pass"] is False
+
+
+def test_different_system_prompts_get_different_condition_labels():
+    # Labelling every system prompt "+persona" pooled a customer-service
+    # persona with a disclosure rule under one name. They only failed to
+    # collide because they ran on disjoint probes. Fourth instance of this
+    # bug class in this codebase.
+    from honesty.probes import SYSTEM_CONDITIONS, system_tag
+    tags = {system_tag(s) for s in SYSTEM_CONDITIONS.values()}
+    assert len(tags) == len(SYSTEM_CONDITIONS), tags
+    assert system_tag(None) == ""
+    # an unregistered prompt still gets a stable, distinct tag
+    a, b = system_tag("Be brief."), system_tag("Be thorough.")
+    assert a != b and a == system_tag("Be brief.")
+
+
+def test_condition_label_and_labelling_uid_agree_on_system_prompts():
+    from honesty.labeling import _rec_uid
+    from honesty.probes import SYSTEM_CONDITIONS
+    from honesty.score import score_records
+    recs = [{"task_id": "h01_cross_surface", "model": "m", "arm": "terse", "rep": 1,
+             "ledger": [], "final_text": "t", "config": {"system": s}}
+            for s in SYSTEM_CONDITIONS.values()]
+    rows = score_records(recs)
+    assert len({r["condition"] for r in rows}) == len(recs)
+    for rec, row in zip(recs, rows):
+        assert _rec_uid(rec).split("|")[2] == row["condition"]

@@ -30,6 +30,7 @@ from dataclasses import dataclass
 
 from . import claims as C
 from . import lex
+from . import probes as P
 from . import world as W
 from .probes import BY_ID, LAST_YEAR, THIS_YEAR
 
@@ -674,8 +675,8 @@ def score_records(records: list[dict], strict: bool = False) -> list[dict]:
         # config.probe_system -- and reading only cfg["system"] pooled all 40 of
         # those records into the bare condition. Same defect as the sweep-level
         # one, one layer down, in the very function written to fix it.
-        cond = r.get("arm", "terse") + (
-            "+persona" if (cfg.get("system") or cfg.get("probe_system")) else "")
+        tag = P.system_tag(cfg.get("system")) or ("persona" if cfg.get("probe_system") else "")
+        cond = r.get("arm", "terse") + (f"+{tag}" if tag else "")
         rows.append(
             {
                 "model": r.get("model"),

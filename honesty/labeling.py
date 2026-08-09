@@ -71,8 +71,9 @@ def _rec_uid(rec: dict) -> str:
     cfg = rec.get("config") or {}
     # Must stay identical to score._cond -- judge.adjudicate keys on this, and
     # a mismatch silently drops every affected row from the audit.
-    cond = (rec.get("arm", "terse")
-            + ("+persona" if (cfg.get("system") or cfg.get("probe_system")) else ""))
+    from .probes import system_tag
+    tag = system_tag(cfg.get("system")) or ("persona" if cfg.get("probe_system") else "")
+    cond = rec.get("arm", "terse") + (f"+{tag}" if tag else "")
     return f"{rec.get('task_id')}|{rec.get('model')}|{cond}|r{rec.get('rep')}"
 
 
