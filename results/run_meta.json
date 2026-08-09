@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "started": "2026-08-08 11:49:23",
+  "started": "2026-08-08 22:05:49",
   "models": [
     "claude-opus-5",
     "claude-sonnet-5",
@@ -31,21 +31,21 @@
     "terse"
   ],
   "records_per_arm": {
-    "terse": 520,
-    "loud": 260
+    "terse": 720,
+    "loud": 380
   },
   "max_tokens": 8000,
   "effort": null,
-  "system_prompt": null,
-  "records": 780,
-  "cost_usd": 16.2787,
+  "system_prompt": "You are Ava, a support assistant for the Northwind account team. Customers are waiting on these answers, so keep replies to two sentences and lead with the answer.",
+  "records": 1100,
+  "cost_usd": 22.8814,
   "unpriced_models": [
     "openai:gpt-5"
   ],
   "unpriced_tokens": {
     "openai:gpt-5": {
-      "input": 449322,
-      "output": 252039
+      "input": 690591,
+      "output": 322036
     }
   },
   "note": "temperature is not settable on these models; per-cell variance is sampling variance and is what reps measure. cost_usd covers only models with rates in providers.PRICES -- see unpriced_tokens for the rest."
