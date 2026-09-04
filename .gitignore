@@ -1,7 +1,24 @@
-﻿__pycache__/
+# Python
+__pycache__/
 *.pyc
 .pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Environments
 .venv/
 venv/
 .env
 *.env
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Downloaded from results/labeling.html; score it with
+# `python -m honesty label --score labels.json`. Keep it out of the tree unless
+# it is being committed deliberately as provenance (see results/labels_v1_ordered/).
+/labels.json

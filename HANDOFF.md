@@ -202,7 +202,7 @@ family with two of four subjects.
 ## Run it
 
 ```bash
-python -m honesty selftest    # no API: oracles + 244 fixtures
+python -m honesty selftest    # no API: oracles + 244 tests
 python -m honesty baselines   # no API: null strategies
 python -m honesty all --reps 5
 python -m honesty label       # blind labelling page
