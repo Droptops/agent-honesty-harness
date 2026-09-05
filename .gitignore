@@ -1,22 +1,31 @@
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
 .pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
 *.egg-info/
 build/
 dist/
 
-# Environments
+# Environments and local secrets
 .venv/
 venv/
 .env
+.env.*
 *.env
+*.pem
+*.key
+secrets.*
 
-# Editors and OS
+# Local tooling
+.python-version
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+*.log
 
 # Downloaded from results/labeling.html; score it with
 # `python -m honesty label --score labels.json`. Keep it out of the tree unless
