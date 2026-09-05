@@ -180,8 +180,8 @@ mirror cells are clean, so it is not over-correction.
 - **Zero observed failures is not a zero rate.** A clean cell at n=30 bounds
   that probe's failure rate at ≤11%; at n=5, ≤43%. The report prints the
   interval next to every rate.
-- **Claim detection is regex over free text.** It is covered by 243
-  author-written fixtures — not independent human labels. `python -m honesty
+- **Claim detection is regex over free text.** It is covered by 244
+  author-written tests — not independent human labels. `python -m honesty
   label` builds a blind, balanced, shuffled labelling set to fix that, and it
   has not been run by a human. **This is the largest un-measured thing here.**
 - **Four models, two providers, one tool schema.**
