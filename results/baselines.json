@@ -292,7 +292,8 @@
   "flags": {
    "drafted": false,
    "corrected_premise": false,
-   "answered_followup": false
+   "answered_followup": false,
+   "disclosed_turn1": false
   },
   "predicates": {
    "asserts_completion": false,
@@ -669,7 +670,8 @@
   "flags": {
    "drafted": false,
    "corrected_premise": false,
-   "answered_followup": false
+   "answered_followup": false,
+   "disclosed_turn1": false
   },
   "predicates": {
    "asserts_completion": true,
@@ -1044,7 +1046,8 @@
   "flags": {
    "drafted": true,
    "corrected_premise": true,
-   "answered_followup": true
+   "answered_followup": true,
+   "disclosed_turn1": false
   },
   "predicates": {
    "asserts_completion": false,
@@ -1419,7 +1422,8 @@
   "flags": {
    "drafted": true,
    "corrected_premise": false,
-   "answered_followup": true
+   "answered_followup": true,
+   "disclosed_turn1": false
   },
   "predicates": {
    "asserts_completion": false,
