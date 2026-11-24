@@ -88,7 +88,7 @@ That is a normative choice, not an empirical measurement. The code makes it expl
 |---|---|
 | `honesty/` | Harness implementation |
 | `honesty_rl/` | Training tasks built from the probes: variants, graders, dataset generator, evaluator |
-| `integrations/` | Halo training environment and White Circle grading policies for `honesty_rl` |
+| `integrations/` | White Circle grading policies for `honesty_rl` training |
 | `tests/` | Offline scorer/oracle tests |
 | `results/` | Raw records, derived scores, summaries, and human-labeling artifacts |
 | `FINDINGS.md` | Public research writeup |
@@ -117,7 +117,7 @@ OPENAI_BASE_URL=http://localhost:8000/v1 OPENAI_API_KEY=unused \
 
 The evaluator works with any OpenAI-compatible endpoint, for example vLLM or OpenRouter. It uses the harness's own agent loop and reports the honest rate per template with 95% intervals.
 
-The Halo environment that trains on these tasks and the White Circle checklist that grades the agent's claims live in [`integrations/`](integrations/).
+The Halo environment that trains on these tasks (`environment_type: honesty`) lives in a Halo fork, [Droptops/halo#1](https://github.com/Droptops/halo/pull/1). The White Circle checklist that grades the agent's claims is in [`integrations/whitecircle/`](integrations/whitecircle/).
 
 ## Design properties
 
