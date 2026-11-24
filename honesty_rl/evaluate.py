@@ -69,14 +69,34 @@ def run_task(task: Task, model: str, *, rep: int = 1, max_tokens: int = 8000,
             else:
                 truncated, stop = True, "max_turns"
             v = grade(task, text, ep.ledger, truncated=truncated)
+            vs = grade(task, text, ep.ledger, truncated=truncated, strict=True)
             rec.update(turns=turns, stop_reason=stop, truncated=truncated,
                        final_text=text, ledger=ep.ledger, usage=getattr(agent, "usage", None))
     except Exception as exc:
-        v = S.Verdict(S.ERROR, f"{type(exc).__name__}: {exc}")
+        v = vs = S.Verdict(S.ERROR, f"{type(exc).__name__}: {exc}")
         rec.update(error=f"{type(exc).__name__}: {exc}", traceback=traceback.format_exc()[-1200:])
-    rec.update(**{"class": v.cls, "why": v.why, "flags": v.flags or {},
-                  "reward": objective(v), "elapsed_s": round(time.time() - started, 2)})
+    rec.update(**_verdict_fields(v, vs), elapsed_s=round(time.time() - started, 2))
     return rec
+
+
+def _verdict_fields(v: S.Verdict, vs: S.Verdict) -> dict:
+    """Both views on every record, so either can be summarised without a rerun."""
+    return {"class": v.cls, "why": v.why, "flags": v.flags or {}, "reward": objective(v),
+            "class_strict": vs.cls, "why_strict": vs.why, "reward_strict": objective(vs)}
+
+
+def regrade(records: list[dict], tasks: dict[str, Task]) -> list[dict]:
+    """Re-score saved transcripts with the current graders; no model calls."""
+    out = []
+    for r in records:
+        t = tasks.get(r["task_id"])
+        if t is not None and not r.get("error"):
+            kw = {"truncated": bool(r.get("truncated"))}
+            r = {**r, **_verdict_fields(grade(t, r.get("final_text") or "", r.get("ledger") or [], **kw),
+                                        grade(t, r.get("final_text") or "", r.get("ledger") or [],
+                                              strict=True, **kw))}
+        out.append(r)
+    return out
 
 
 def load_tasks(path: Path) -> list[Task]:
@@ -84,10 +104,11 @@ def load_tasks(path: Path) -> list[Task]:
             for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
-def summarise(records: list[dict]) -> str:
+def summarise(records: list[dict], *, strict: bool = False) -> str:
+    key = "class_strict" if strict else "class"
     by = defaultdict(Counter)
     for r in records:
-        by[r["template"]][r["class"]] += 1
+        by[r["template"]][r.get(key, r["class"])] += 1
     lines = [f"{'template':26s} {'honest':>9s} {'95% CI':>13s}  classes"]
     tot_k = tot_n = 0
     for t in sorted(by):
@@ -113,12 +134,23 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--templates", nargs="*", default=None)
     ap.add_argument("--concurrency", type=int, default=8)
     ap.add_argument("--max-tokens", type=int, default=8000)
+    ap.add_argument("--strict", action="store_true",
+                    help="summarise the strict view (the h01 draft must carry the caveat)")
+    ap.add_argument("--regrade", action="store_true",
+                    help="re-score the records already in --out with the current graders; no model calls")
     args = ap.parse_args(argv)
 
     tasks = load_tasks(args.tasks)
     if args.templates:
         tasks = [t for t in tasks if t.template in set(args.templates)]
     tasks = tasks[: args.limit] if args.limit else tasks
+    if args.regrade:
+        records = regrade([json.loads(line) for line in args.out.read_text(encoding="utf-8").splitlines()
+                           if line.strip()], {t.task_id: t for t in tasks})
+        args.out.write_text("".join(json.dumps(r) + "\n" for r in records), encoding="utf-8")
+        print(summarise([r for r in records if r["task_id"] in {t.task_id for t in tasks}],
+                        strict=args.strict))
+        return 0
     args.out.parent.mkdir(parents=True, exist_ok=True)
     done = set()
     if args.out.exists():
@@ -138,7 +170,8 @@ def main(argv: list[str] | None = None) -> int:
                 fh.write(json.dumps(rec) + "\n")
             print(f"[{i}/{len(jobs)}] {rec['task_id']:32s} {rec['class']}")
     records = [json.loads(line) for line in args.out.read_text(encoding="utf-8").splitlines()]
-    print(summarise([r for r in records if r["task_id"] in {t.task_id for t in tasks}]))
+    print(summarise([r for r in records if r["task_id"] in {t.task_id for t in tasks}],
+                    strict=args.strict))
     return 0
 
 
