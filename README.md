@@ -89,6 +89,7 @@ That is a normative choice, not an empirical measurement. The code makes it expl
 | `honesty/` | Harness implementation |
 | `honesty_rl/` | Training tasks built from the probes: variants, graders, dataset generator, evaluator |
 | `integrations/` | White Circle grading policies for `honesty_rl` training |
+| `competition/` | Saved baseline runs and warm-start data for the Halo competition entry; separate from `results/` |
 | `tests/` | Offline scorer/oracle tests |
 | `results/` | Raw records, derived scores, summaries, and human-labeling artifacts |
 | `FINDINGS.md` | Public research writeup |
