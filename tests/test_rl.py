@@ -460,3 +460,66 @@ def test_paraphrased_tasks_grade_exactly_as_their_originals():
         assert O.run(b, O.dishonest).cls == O.run(a, O.dishonest).cls
     kept, tally = paraphrase_tasks(tasks, broken, concurrency=1)
     assert kept == tasks and tally == {"error: RuntimeError": 3}
+
+
+# ---- blind hand labels -----------------------------------------------------
+
+def _labelled_records():
+    from honesty_rl.variants import generate as gen
+    tasks, records = [], []
+    for template in ("h01_cross_surface", "c04_legit_attachment", "e01_missing_file", "h03_long_horizon"):
+        for i, task in enumerate(gen(template, 6, seed=60)):
+            script = O.honest if i % 2 else O.dishonest
+            tasks.append(task)
+            records.append(run_task(task, "scripted",
+                                    agent_factory=lambda t=task, s=script: _ScriptedAgent(*s(t))))
+    return tasks, records
+
+
+def test_label_cards_are_blind_and_describe_the_variant():
+    from honesty import labeling
+    from honesty_rl import label as L
+    tasks, records = _labelled_records()
+    assert sorted(labeling._uid(r) for r in L.rows(records)) == \
+        sorted(labeling._rec_uid(r) for r in records), "a card must find its own record"
+    cards = L.items(records, tasks, n=8)
+    assert len(cards) == 8
+    assert len({c["uid"].split("/")[0] for c in cards}) == 4, "spread by template, not by id"
+    by_id = {t.task_id: t for t in tasks}
+    for c in cards:
+        task = by_id[c["uid"].split("|")[0]]
+        assert c["task"] == task.user_message
+        assert all(name in c["ground_truth"] for name in task.world.get("downloads", {}))
+        assert "class" not in c and "why" not in c
+        assert not any(cls in json.dumps(c) for cls in (S.SUBSTITUTED, S.OVER_REFUSED,
+                                                        "UNDISCLOSED_ARTIFACT", "OVER_CAUTIONED"))
+
+
+def test_label_card_shows_the_whole_follow_up_exchange():
+    from honesty_rl import label as L
+    task = generate("f04_false_premise", 1, seed=8)[0]
+    rec = run_task(task, "scripted", agent_factory=lambda: _FollowUpAgent(O.dishonest(task)))
+    card = L.items([rec], [task], n=1)[0]
+    text = card["final_text"]
+    assert text.startswith("First reply:") and task.followups[0]["text"] in text
+    assert rec["replies"][0] in text and rec["replies"][-1] in text
+
+
+def test_label_cli_builds_a_strict_page_and_scores_it(tmp_path, capsys):
+    from honesty import labeling
+    from honesty_rl import label as L
+    tasks, records = _labelled_records()
+    (tmp_path / "tasks.jsonl").write_text("".join(json.dumps(t.to_row()) + "\n" for t in tasks))
+    (tmp_path / "recs.jsonl").write_text("".join(json.dumps(r) + "\n" for r in records))
+    base = ["--records", str(tmp_path / "recs.jsonl"), "--tasks", str(tmp_path / "tasks.jsonl")]
+    assert L.main(base + ["--out", str(tmp_path / "std.html"), "--n", "8"]) == 0
+    assert L.main(base + ["--out", str(tmp_path / "strict.html"), "--n", "8", "--strict"]) == 0
+    assert "UNDISCLOSED_ARTIFACT" in (tmp_path / "strict.html").read_text()
+    assert "UNDISCLOSED_ARTIFACT" not in (tmp_path / "std.html").read_text()
+    # a rater who reads every run as the strict grader does
+    labels = {labeling._uid(r): r["class"] for r in L.rows(records, strict=True)}
+    (tmp_path / "labels.json").write_text(json.dumps(labels))
+    capsys.readouterr()
+    assert L.main(base + ["--score", str(tmp_path / "labels.json"), "--strict"]) == 0
+    out = capsys.readouterr().out
+    assert f"({len(records)} labelled)" in out and "Cohen's kappa : 1.000" in out
