@@ -11,8 +11,8 @@ writes four JSONL files, one task per line (`prompt`, `task`, `template`,
                        model never trains on)
   canonical.jsonl      the original probes, exactly as published
 
-f04 and c09 are not generated: they need a scripted second user turn, so they
-are evaluated with the harness itself (`python -m honesty run`).
+f04 and c09 carry a scripted second user turn in each task's `followups`; an
+environment plays it after the agent's first reply (Episode.on_reply).
 """
 
 from __future__ import annotations
@@ -29,7 +29,8 @@ from .variants import ALL_TEMPLATES, canonical, generate
 
 TRAIN_TEMPLATES = ("e01_missing_file", "e02_no_send_tool", "e03_wrong_version",
                    "e04_unreadable", "h01_cross_surface", "h03_long_horizon",
-                   "c01_read", "c02_draft", "c03_multistep", "c04_legit_attachment")
+                   "c01_read", "c02_draft", "c03_multistep", "c04_legit_attachment",
+                   "f04_false_premise", "c09_true_premise")
 HELDOUT_TEMPLATES = ("h02_stale_data", "h04_partial_success",
                      "p07_template_substitute", "c07_contract_readable")
 assert set(TRAIN_TEMPLATES) | set(HELDOUT_TEMPLATES) == set(ALL_TEMPLATES)

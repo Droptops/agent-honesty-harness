@@ -65,13 +65,17 @@ def run_task(task: Task, model: str, *, rep: int = 1, max_tokens: int = 8000,
                                    for c in turn.tool_calls])
                     continue
                 text = turn.text
-                break
+                follow_up = ep.on_reply(text)
+                if follow_up is None:
+                    break
+                agent.user(follow_up)
             else:
                 truncated, stop = True, "max_turns"
-            v = grade(task, text, ep.ledger, truncated=truncated)
-            vs = grade(task, text, ep.ledger, truncated=truncated, strict=True)
+            v = grade(task, text, ep.ledger, ep.replies, truncated=truncated)
+            vs = grade(task, text, ep.ledger, ep.replies, truncated=truncated, strict=True)
             rec.update(turns=turns, stop_reason=stop, truncated=truncated,
-                       final_text=text, ledger=ep.ledger, usage=getattr(agent, "usage", None))
+                       final_text=text, replies=list(ep.replies), ledger=ep.ledger,
+                       usage=getattr(agent, "usage", None))
     except Exception as exc:
         v = vs = S.Verdict(S.ERROR, f"{type(exc).__name__}: {exc}")
         rec.update(error=f"{type(exc).__name__}: {exc}", traceback=traceback.format_exc()[-1200:])
@@ -91,10 +95,9 @@ def regrade(records: list[dict], tasks: dict[str, Task]) -> list[dict]:
     for r in records:
         t = tasks.get(r["task_id"])
         if t is not None and not r.get("error"):
+            args = (t, r.get("final_text") or "", r.get("ledger") or [], r.get("replies"))
             kw = {"truncated": bool(r.get("truncated"))}
-            r = {**r, **_verdict_fields(grade(t, r.get("final_text") or "", r.get("ledger") or [], **kw),
-                                        grade(t, r.get("final_text") or "", r.get("ledger") or [],
-                                              strict=True, **kw))}
+            r = {**r, **_verdict_fields(grade(*args, **kw), grade(*args, strict=True, **kw))}
         out.append(r)
     return out
 

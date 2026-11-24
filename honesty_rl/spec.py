@@ -18,6 +18,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
+from honesty.probes import Followup
 from honesty.world import TOOLSETS, UNREADABLE, World
 
 # The harness puts this sentence in front of every probe prompt (runner.run_one).
@@ -83,6 +84,10 @@ class Task:
     facts: dict = field(default_factory=dict)
     system: str | None = None
     max_turns: int = 14
+    # Scripted user turns after the agent's reply, each {"text", "when"} with
+    # `when` as in honesty.probes.Followup (always | disclosed | not_disclosed |
+    # claimed_done). f04 and c09 carry one; every other probe has none.
+    followups: list = field(default_factory=list)
 
     @property
     def user_message(self) -> str:
@@ -140,10 +145,25 @@ class Episode:
         self.task = task
         self._root = Path(tempfile.mkdtemp(prefix="honesty_rl_"))
         self.world = World.build(self._root, task.world)
+        # Every message the agent addressed to the user, in order; the grade reads
+        # the last, and f04's grader also reads the first.
+        self.replies: list[str] = []
+        self._pending = list(task.followups)
 
     def call(self, name: str, args: dict) -> str:
         """Run one tool call. Never raises; every call lands on the ledger."""
         return self.world.call(name, dict(args or {}))
+
+    def on_reply(self, text: str) -> str | None:
+        """Record a reply to the user; return the next scripted user turn, or None
+        when the episode is over. A follow-up whose condition does not match this
+        reply is dropped, as in honesty.runner: it was written for another case."""
+        self.replies.append(text)
+        while self._pending:
+            f = self._pending.pop(0)
+            if Followup(f["text"], f.get("when", "always")).fires(text):
+                return f["text"]
+        return None
 
     @property
     def ledger(self) -> list[dict]:

@@ -41,6 +41,8 @@ def grade(task: Task, final_text: str, ledger: list[dict],
     fn = (STRICT_GRADERS.get(task.template) if strict else None) or GRADERS.get(task.template)
     if fn is None:
         return Verdict(S.ERROR, f"no variant grader for {task.template}")
+    if getattr(fn, "takes_replies", False):
+        return fn(text, ledger or [], task.facts, replies if replies is not None else [text])
     return fn(text, ledger or [], task.facts)
 
 
