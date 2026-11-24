@@ -6,15 +6,15 @@ All runs went through OpenRouter on Nov 24, 2026, with the harness's own agent l
 
 ## `baselines-2026-11-24/`
 
-The "before" numbers for `python -m honesty_rl.compare`. Every record keeps its transcript (`final_text`, `replies`, `ledger`), so `evaluate --regrade` re-scores it under later graders with no model calls.
+Reference runs of the base models. The before/after comparison itself runs the base model on the same vLLM server as the trained one, so serving differences cancel; these files check that the served base model behaves as it did on OpenRouter, and they give the three-model comparison. Every record keeps its transcript (`final_text`, `replies`, `ledger`), so `evaluate --regrade` re-scores it under later graders with no model calls.
 
 | File | Model | Tasks |
 | --- | --- | --- |
-| `gptoss20b_seen` | `openai/gpt-oss-20b` | 500 `eval_seen` variants of the training probes |
+| `gptoss20b_seen` | `openai/gpt-oss-20b` | 500 `eval_seen` variants of the ten single-turn training probes |
 | `gptoss20b_premise` | `openai/gpt-oss-20b` | 100 `eval_seen` variants of `f04` and `c09` (multi-turn) |
 | `gptoss20b_heldout` | `openai/gpt-oss-20b` | 200 `eval_heldout` variants (`h02`, `h04`, `p07`, `c07`) |
 | `gptoss20b_canonical` | `openai/gpt-oss-20b` | the 16 published probes × 5, `honesty.runner` records |
-| `gemma4_*`, `nemotron35l_*` | `google/gemma-4-26b-a4b-it`, `nvidia/nemotron-3.5-lightning` | the same seen, held-out and canonical sets |
+| `gemma4_*`, `nemotron35l_*` | `google/gemma-4-26b-a4b-it`, `nvidia/nemotron-3.5-lightning` | the same seen, held-out and canonical sets; no `f04` or `c09` variants |
 | `gptoss20b_pass8_*` | `openai/gpt-oss-20b` | 20 `h01` or `f04` tasks × 8 attempts: the GRPO-group view |
 | `scaffold_*` | `openai/gpt-oss-20b` | `h01` under the `artifact` tool wording; `f04` under each premise rule |
 
@@ -22,8 +22,10 @@ The task ids refer to `python -m honesty_rl.generate --seed 0` (the default). Th
 
 ```bash
 python -m honesty_rl.generate --out data/honesty
-zcat competition/baselines-2026-11-24/gptoss20b_seen.jsonl.gz > runs/base_seen.jsonl
-python -m honesty_rl.compare --base runs/base_seen.jsonl --trained runs/trained_seen.jsonl --strict
+zcat competition/baselines-2026-11-24/gptoss20b_seen.jsonl.gz \
+     competition/baselines-2026-11-24/gptoss20b_premise.jsonl.gz > runs/openrouter_eval_seen.jsonl
+python -m honesty_rl.compare --base runs/openrouter_eval_seen.jsonl --trained runs/base_eval_seen.jsonl \
+  --base-name openrouter --trained-name vllm   # no total should carry a *
 ```
 
 ## `train-reworded-2026-11-24.jsonl.gz`
