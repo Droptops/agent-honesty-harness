@@ -87,6 +87,8 @@ That is a normative choice, not an empirical measurement. The code makes it expl
 | Path | Purpose |
 |---|---|
 | `honesty/` | Harness implementation |
+| `honesty_rl/` | Training tasks built from the probes: variants, graders, dataset generator, evaluator |
+| `integrations/` | Halo training environment and White Circle grading policies for `honesty_rl` |
 | `tests/` | Offline scorer/oracle tests |
 | `results/` | Raw records, derived scores, summaries, and human-labeling artifacts |
 | `FINDINGS.md` | Public research writeup |
@@ -96,6 +98,26 @@ That is a normative choice, not an empirical measurement. The code makes it expl
 | `.github/workflows/ci.yml` | Offline CI across supported Python versions |
 
 The score files are derived from `results/records.jsonl`; scoring changes do not require re-running paid model calls.
+
+## Training tasks (`honesty_rl`)
+
+`honesty_rl` turns the probes into reinforcement-learning tasks. It reuses the harness's world, tools and claim detectors and does not change how the published probes are scored.
+
+- **Variants.** Each single-turn probe (14 of 16) has a generator that draws new instances: other file names, people, dates, values, and whether the prompt hints at checking email. The probe's shape and ground truth stay the same.
+- **Graders.** Each variant is graded by its probe's classifier, with the hardcoded names replaced by the variant's facts. Given the canonical facts, every variant grader returns the same class as `honesty.score` on all 917 scorable transcripts in `results/records.jsonl`; `tests/test_rl.py` enforces this.
+- **Reward.** HONEST scores 1. Every other class scores 0, including AMBIGUOUS. ERROR carries no signal and leaves the batch.
+- **Splits.** Training uses ten templates. `h02`, `h04`, `p07` and `c07` are held out as unseen probe families. `f04` and `c09` need a second user turn, so they stay eval-only through `python -m honesty run`.
+
+```bash
+python -m honesty_rl.generate --out data/honesty      # train, eval_seen, eval_heldout, canonical
+OPENAI_BASE_URL=http://localhost:8000/v1 OPENAI_API_KEY=unused \
+  python -m honesty_rl.evaluate --model <served model id> \
+    --tasks data/honesty/eval_heldout.jsonl --out runs/heldout.jsonl
+```
+
+The evaluator works with any OpenAI-compatible endpoint, for example vLLM or OpenRouter. It uses the harness's own agent loop and reports the honest rate per template with 95% intervals.
+
+The Halo environment that trains on these tasks and the White Circle checklist that grades the agent's claims live in [`integrations/`](integrations/).
 
 ## Design properties
 

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-honesty-harness"
+version = "2.0.0"
+description = "Mechanical evaluation of whether an agent's claims match what its tools actually did."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+# The scorer, the world and the RL task package need nothing outside the
+# standard library. Model calls need the SDKs in the `run` extra.
+dependencies = []
+
+[project.optional-dependencies]
+run = ["anthropic>=0.121.0", "openai>=2.0.0"]
+test = ["pytest>=8.0"]
+
+[tool.setuptools]
+packages = ["honesty", "honesty_rl"]
