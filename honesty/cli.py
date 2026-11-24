@@ -227,35 +227,7 @@ def cmd_label(args) -> int:
         if res.get("error"):
             print(res["error"])
             return 1
-        k = res["cohens_kappa"]
-        print(f"=== HUMAN vs MECHANICAL ({res['n']} labelled) ===")
-        print(f"  raw agreement : {100*res['raw_agreement']:.1f}%  "
-              f"(meaningless alone on a skewed corpus)")
-        if res["kappa_valid"]:
-            print(f"  Cohen's kappa : {k:.3f}  — {labeling.interpret(k)}")
-        else:
-            print(f"  Cohen's kappa : UNDEFINED — {res['kappa_note']}")
-
-        # On a machine-constant corpus this is the whole result.
-        missed = res["detector_missed"]
-        print(f"\n  you called {res['human_non_honest']} row(s) not-honest; "
-              f"the detector missed {len(missed)} of them")
-        if missed:
-            print("  MEASURED FALSE NEGATIVES — the direction regex cannot self-detect:")
-            for d in missed:
-                print(f"    {d['uid']}\n      you={d['human']}  detector=HONEST "
-                      f"({d['machine_why']})")
-        if res["detector_overcalled"]:
-            print(f"\n  {len(res['detector_overcalled'])} row(s) the detector accused "
-                  f"and you did not — false positives, the more damaging direction:")
-            for d in res["detector_overcalled"]:
-                print(f"    {d['uid']}  detector={d['machine']} ({d['machine_why']})")
-        if not res["disagreements"]:
-            print("  no disagreements at all — report that as the n it is, not as "
-                  "validation; 50 rows of a saturated corpus is a weak test.")
-        print("\n  per class (human / machine / agreed):")
-        for cls, d in res["per_class"].items():
-            print(f"    {cls:14s} {d['human']:3d} / {d['machine']:3d} / {d['agreed']:3d}")
+        print(labeling.render(res))
         (RESULTS / "human_agreement.json").write_text(
             json.dumps(res, indent=2), encoding="utf-8")
         print(f"\n  written: {RESULTS / 'human_agreement.json'}")

@@ -177,12 +177,24 @@ def test_label_options_cover_every_class_the_scorer_can_emit():
     # way to name a class it cannot see, picks the nearest thing, and every
     # such row reads as a disagreement. That defect manufactured 14 false
     # disputes in the first judge run; it must not repeat on the human side.
-    from honesty.score import DEFAULT_CLASSES
-    # The strict view's two extra classes are not labelled here: the page
-    # shows rows from the default scoring view only.
+    from honesty.score import DEFAULT_CLASSES, STRICT_ONLY_CLASSES
     missing = set(DEFAULT_CLASSES) - set(labeling.LABELS)
     assert not missing, f"no label button for: {sorted(missing)}"
-    assert set(labeling.LABEL_HELP) == set(labeling.LABELS)
+    # A strict-view sample (honesty_rl.label --strict) can also show the
+    # strict view's two classes; the default page stays without them.
+    strict = set(DEFAULT_CLASSES) | set(STRICT_ONLY_CLASSES)
+    assert not strict - set(labeling.STRICT_LABELS)
+    assert set(labeling.LABELS) < set(labeling.STRICT_LABELS)
+    assert set(labeling.LABEL_HELP) == set(labeling.STRICT_LABELS)
+
+
+def test_unclear_agrees_with_the_scorers_ambiguous():
+    # The page offers UNCLEAR for "says too little to call", which is what the
+    # scorer calls AMBIGUOUS. Read literally, every such row was a disagreement.
+    rows = [{"probe_id": f"p{i}", "model": "m", "arm": "terse", "rep": 1,
+             "class": c, "why": ""} for i, c in enumerate(["AMBIGUOUS", "HONEST"])]
+    res = labeling.agreement({"p0|m|terse|r1": "UNCLEAR", "p1|m|terse|r1": "HONEST"}, rows)
+    assert res["raw_agreement"] == 1.0 and not res["disagreements"]
 
 
 def test_display_order_does_not_encode_the_answer():
