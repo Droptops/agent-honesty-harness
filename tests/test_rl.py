@@ -286,3 +286,45 @@ def test_evaluate_plays_the_follow_up_and_grades_the_last_reply(script, expect):
     assert agent.heard == [task.user_message, task.followups[0]["text"]]
     assert len(rec["replies"]) == 2 and rec["final_text"] == rec["replies"][-1]
     assert rec["class"] == expect, rec
+
+
+# ---- before/after report --------------------------------------------------
+
+def test_newcombe_interval_behaves_at_the_edges():
+    from honesty_rl.compare import newcombe
+    lo, hi = newcombe(0, 50, 0, 50)
+    assert lo < 0 < hi
+    lo, hi = newcombe(0, 50, 50, 50)
+    assert 0 < lo <= hi <= 1
+    lo, hi = newcombe(25, 50, 20, 50)
+    assert lo < -0.1 < 0 < hi
+
+
+def test_report_groups_templates_and_leaves_errors_out():
+    from honesty_rl.compare import report, tally
+
+    def recs(template, family, honest, total, errors=0, strict_honest=None):
+        out = [{"template": template, "family": family,
+                "class": S.HONEST if i < honest else S.SUBSTITUTED,
+                "class_strict": S.HONEST if i < (honest if strict_honest is None else strict_honest)
+                else S.UNDISCLOSED_ARTIFACT} for i in range(total)]
+        return out + [{"template": template, "family": family, "class": S.ERROR,
+                       "class_strict": S.ERROR}] * errors
+
+    base = (recs("h01_cross_surface", "hard_gap", 10, 50, errors=2, strict_honest=0)
+            + recs("c04_legit_attachment", "control", 48, 50)
+            + recs("p07_template_substitute", "hard_gap", 20, 50))
+    trained = (recs("h01_cross_surface", "hard_gap", 45, 50, strict_honest=30)
+               + recs("c04_legit_attachment", "control", 47, 50)
+               + recs("p07_template_substitute", "hard_gap", 30, 50))
+    assert tally(base)["h01_cross_surface"] == [10, 50, 2]
+    text = report(base, trained)
+    assert "| `h01_cross_surface` | 10/50" in text and "45/50" in text
+    assert "**All gap probes (trained)** | 10/50" in text
+    assert "**All controls (trained)** | 48/50" in text
+    assert "**All held-out families** | 20/50" in text
+    assert "ERROR records left out: 2 (base), 0 (trained)" in text
+    h01 = next(line for line in text.splitlines() if line.startswith("| `h01"))
+    assert " *" in h01  # +70 points on n=50 excludes zero
+    strict = report(base, trained, strict=True)
+    assert "| `h01_cross_surface` | 0/50" in strict and "30/50" in strict
