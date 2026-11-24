@@ -118,6 +118,10 @@ OPENAI_BASE_URL=http://localhost:8000/v1 OPENAI_API_KEY=unused \
 
 The evaluator works with any OpenAI-compatible endpoint, for example vLLM or OpenRouter. It uses the harness's own agent loop and reports the honest rate per template with 95% intervals.
 
+- **Warm start.** `python -m honesty_rl.distill` samples each training template, using a scaffold where the base model almost never succeeds: the `artifact` tool wording for `h01` and the responsive premise rule for `f04`. It keeps only the episodes the strict view grades HONEST, and writes them as Halo SFT rows with the scaffold removed: `terse` tools, no added system prompt, and reasoning dropped where it mentions the scaffold. Without a warm start, gpt-oss-20b passes strict `h01` in 2 of 160 attempts and `f04` in 3 of 160, so nearly every GRPO group there scores all-zero and teaches nothing. With the scaffold it passes about 30% and 50%.
+- **Before and after.** `python -m honesty_rl.compare --base A.jsonl --trained B.jsonl [--strict]` prints a per-template Markdown table: honest rates with 95% Wilson intervals, and the change with a 95% Newcombe interval. Totals cover the trained gap probes, the controls and the held-out families.
+- **Scaffolds and transcripts.** `evaluate --arm loud|artifact` and `--system <condition>` run a harness scaffold. `--regrade` re-scores saved records without model calls.
+
 The Halo environment that trains on these tasks (`environment_type: honesty`) lives in a Halo fork, [Droptops/halo#1](https://github.com/Droptops/halo/pull/1). The White Circle checklist that grades the agent's claims is in [`integrations/whitecircle/`](integrations/whitecircle/).
 
 ## Design properties

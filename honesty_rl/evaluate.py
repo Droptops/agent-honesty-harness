@@ -23,6 +23,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from honesty import score as S
+from honesty.probes import SYSTEM_CONDITIONS
 
 from .grade import grade, objective
 from .spec import Episode, Task, tools
@@ -39,16 +40,18 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
 
 
 def run_task(task: Task, model: str, *, rep: int = 1, max_tokens: int = 8000,
-             agent_factory=None) -> dict:
+             agent_factory=None, arm: str = "terse", system: str | None = None,
+             keep_messages: bool = False) -> dict:
     """One task, one model, one repetition. Never raises."""
     from honesty import providers
 
     started = time.time()
     rec: dict = {"model": model, "task_id": task.task_id, "template": task.template,
-                 "family": task.family, "achievable": task.achievable, "rep": rep}
+                 "family": task.family, "achievable": task.achievable, "rep": rep,
+                 "arm": arm, "system_override": system}
     try:
         make = agent_factory or (lambda: providers.OpenAIAgent(
-            model, tools("terse"), max_tokens=max_tokens, system=task.system))
+            model, tools(arm), max_tokens=max_tokens, system=system or task.system))
         agent = make()
         with Episode(task) as ep:
             agent.user(task.user_message)
@@ -76,6 +79,8 @@ def run_task(task: Task, model: str, *, rep: int = 1, max_tokens: int = 8000,
             rec.update(turns=turns, stop_reason=stop, truncated=truncated,
                        final_text=text, replies=list(ep.replies), ledger=ep.ledger,
                        usage=getattr(agent, "usage", None))
+            if keep_messages:
+                rec["messages"] = list(getattr(agent, "messages", []))
     except Exception as exc:
         v = vs = S.Verdict(S.ERROR, f"{type(exc).__name__}: {exc}")
         rec.update(error=f"{type(exc).__name__}: {exc}", traceback=traceback.format_exc()[-1200:])
@@ -137,6 +142,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--templates", nargs="*", default=None)
     ap.add_argument("--concurrency", type=int, default=8)
     ap.add_argument("--max-tokens", type=int, default=8000)
+    ap.add_argument("--arm", default="terse", choices=["terse", "loud", "artifact"],
+                    help="tool descriptions: the harness's arms (default terse, as trained and evaluated)")
+    ap.add_argument("--system", default=None, choices=sorted(SYSTEM_CONDITIONS),
+                    help="a named harness system prompt in place of the task's own")
     ap.add_argument("--strict", action="store_true",
                     help="summarise the strict view (the h01 draft must carry the caveat)")
     ap.add_argument("--regrade", action="store_true",
@@ -165,7 +174,9 @@ def main(argv: list[str] | None = None) -> int:
             if (t.task_id, rep) not in done]
     print(f"{len(jobs)} runs to go ({len(done)} done)")
     with ThreadPoolExecutor(max_workers=args.concurrency) as pool:
-        futs = [pool.submit(run_task, t, args.model, rep=rep, max_tokens=args.max_tokens)
+        system = SYSTEM_CONDITIONS[args.system] if args.system else None
+        futs = [pool.submit(run_task, t, args.model, rep=rep, max_tokens=args.max_tokens,
+                            arm=args.arm, system=system)
                 for t, rep in jobs]
         for i, fut in enumerate(as_completed(futs), 1):
             rec = fut.result()
