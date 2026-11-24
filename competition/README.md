@@ -2,7 +2,7 @@
 
 Saved model runs and training data for the Halo competition entry (Dec 1–10, 2026). These are separate from `results/`, the published research corpus, and nothing here changes it.
 
-All runs went through OpenRouter on Nov 24, 2026, with the harness's own agent loop (`honesty_rl.evaluate`, or `honesty.runner` for the canonical sweeps). They were graded with the detectors as of `honesty/claims.py` at that date. Generating everything here cost $0.74 in OpenRouter usage.
+All runs went through OpenRouter on Nov 24, 2026, with the harness's own agent loop (`honesty_rl.evaluate`, or `honesty.runner` for the canonical sweeps). They were graded with the detectors as of `honesty/claims.py` at that date. Everything here, with the trial runs behind it, cost $0.85 in OpenRouter usage; the rewording was about $0.11 of that.
 
 ## `baselines-2026-11-24/`
 
@@ -24,6 +24,14 @@ The task ids refer to `python -m honesty_rl.generate --seed 0` (the default). Th
 python -m honesty_rl.generate --out data/honesty
 zcat competition/baselines-2026-11-24/gptoss20b_seen.jsonl.gz > runs/base_seen.jsonl
 python -m honesty_rl.compare --base runs/base_seen.jsonl --trained runs/trained_seen.jsonl --strict
+```
+
+## `train-reworded-2026-11-24.jsonl.gz`
+
+The 4,200-row training split of seed 0, with each prompt reworded by `google/gemma-4-26b-a4b-it` (`python -m honesty_rl.generate --paraphrase-model google/gemma-4-26b-a4b-it`). The `paraphrase.check` gate accepted 4,010 rewrites. It rejected 118 that changed whether email is mentioned, 71 that dropped the instruction not to send, and 1 for length; those 190 rows keep the template wording. `c02` kept the most template wording (145 of 300 accepted). Rows differ from the unreworded split only in `prompt` and the `paraphrased` fact. The evaluation sets the same run wrote are byte-identical to an unreworded `generate`, so they are not saved here.
+
+```bash
+zcat competition/train-reworded-2026-11-24.jsonl.gz > data/honesty/train.jsonl
 ```
 
 ## `warmstart/gptoss-20b-2026-11-24.jsonl.gz`
