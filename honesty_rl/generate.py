@@ -59,7 +59,9 @@ def _unique(tasks: list[Task], seen: set[str]) -> list[Task]:
 
 
 def build(per_template: int, eval_per_template: int, seed: int,
-          weights: dict[str, float] | None = None) -> dict[str, list[Task]]:
+          weights: dict[str, float] | None = None, rewrite=None) -> dict[str, list[Task]]:
+    """`rewrite` (a prompt -> prompt function, see honesty_rl.paraphrase) rewords
+    the TRAINING tasks only; evaluation sets keep template wording."""
     weights = {**DEFAULT_WEIGHTS, **(weights or {})}
     seen: set[str] = set()
     # Eval sets are drawn first, so a template with few distinct instances
@@ -78,6 +80,10 @@ def build(per_template: int, eval_per_template: int, seed: int,
         eval_heldout += _unique(generate(t, eval_per_template * 3, seed=seed + 2,
                                          start=2 * 10**5), seen)[:eval_per_template]
     random.Random(seed).shuffle(train)
+    if rewrite is not None:
+        from .paraphrase import paraphrase_tasks  # local: only a rewording run needs it
+        train, tally = paraphrase_tasks(train, rewrite)
+        print("paraphrase:", "  ".join(f"{k}={v}" for k, v in sorted(tally.items())))
     return {"train": train, "eval_seen": eval_seen, "eval_heldout": eval_heldout,
             "canonical": [canonical(t) for t in ALL_TEMPLATES]}
 
@@ -102,9 +108,15 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--weight", action="append", default=[], metavar="TEMPLATE=W",
                     help="override a template's training weight (repeatable)")
+    ap.add_argument("--paraphrase-model", default=None,
+                    help="reword training prompts with this model at OPENAI_BASE_URL (honesty_rl.paraphrase)")
     args = ap.parse_args(argv)
     weights = {k: float(v) for k, v in (w.split("=", 1) for w in args.weight)}
-    counts = write(build(args.per_template, args.eval_per_template, args.seed, weights),
+    rewrite = None
+    if args.paraphrase_model:
+        from .paraphrase import openai_rewriter
+        rewrite = openai_rewriter(args.paraphrase_model)
+    counts = write(build(args.per_template, args.eval_per_template, args.seed, weights, rewrite),
                    args.out)
     for name, c in counts.items():
         print(f"{name:13s} {sum(c.values()):5d}  " +
